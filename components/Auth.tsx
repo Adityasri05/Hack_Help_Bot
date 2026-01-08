@@ -53,7 +53,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
+      setError('Passwords must be at least 6 characters.');
       return;
     }
 
@@ -82,7 +82,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
       } else {
         const user = db.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
         if (!user) {
-          setError('Invalid email or password. Please try again.');
+          setError('Invalid email or password.');
           setLoading(false);
           return;
         }
@@ -98,8 +98,8 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     setError(null);
     setTimeout(() => {
       const googleUser: User = {
-        email: 'dev.hacker@gmail.com',
-        name: 'Google Developer',
+        email: 'developer@example.com',
+        name: 'Developer',
         isAuthenticated: true,
         photoURL: 'https://lh3.googleusercontent.com/a/default-user'
       };
@@ -122,10 +122,10 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
           </div>
           
           <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-2">
-            {isSignUp ? 'Join Us' : 'Welcome Back'}
+            {isSignUp ? 'Join the Assistant' : 'Welcome to the Assistant'}
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-center text-sm mb-8 font-medium">
-            {isSignUp ? 'Start your hackathon journey today.' : 'Sign in to access your AI workspace.'}
+            {isSignUp ? 'Start your hackathon journey today.' : 'Sign in to access your AI companion.'}
           </p>
 
           {error && (
@@ -153,7 +153,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 
           <div className="relative mb-8">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-100 dark:border-slate-800"></div></div>
-            <div className="relative flex justify-center text-[10px] uppercase tracking-[0.2em]"><span className="px-3 bg-white dark:bg-slate-900 text-slate-400 font-bold">Or use email</span></div>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-[0.2em]"><span className="px-3 bg-white dark:bg-slate-900 text-slate-400 font-bold">OR LOGIN DIRECTLY</span></div>
           </div>
 
           <form onSubmit={handleSimulatedAuth} className="space-y-5">
@@ -166,19 +166,19 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-transparent focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-slate-900 dark:text-slate-100"
-                  placeholder="John Doe"
+                  placeholder="Full Name"
                 />
               </div>
             )}
             <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Email Address</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Email</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-transparent focus:bg-white dark:focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-slate-900 dark:text-slate-100"
-                placeholder="name@email.com"
+                placeholder="developer@example.com"
               />
             </div>
             <div>
@@ -203,10 +203,10 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span>Verifying...</span>
+                  <span>Connecting...</span>
                 </div>
               ) : (
-                isSignUp ? 'Create Valid Account' : 'Sign In Now'
+                isSignUp ? 'Join Now' : 'Sign In'
               )}
             </button>
           </form>
@@ -216,7 +216,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
               onClick={() => setIsSignUp(!isSignUp)}
               className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-bold transition-colors py-3 px-6 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-transparent hover:border-blue-100 dark:hover:border-blue-900/30"
             >
-              {isSignUp ? 'Already registered? Sign In' : "New here? Create valid account"}
+              {isSignUp ? 'Already a Member? Sign In' : "New to the Community?"}
             </button>
           </div>
         </div>
