@@ -24,6 +24,13 @@
       .chat-scrollbar::-webkit-scrollbar-thumb:hover {
         background: #d1d5db;
       }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
     </style>
   <script type="importmap">
 {
@@ -36,7 +43,7 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50">
+  <body class="bg-gray-100">
     <div id="root"></div>
   </body>
 </html>

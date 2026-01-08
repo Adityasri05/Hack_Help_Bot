@@ -1,5 +1,7 @@
 {
   "name": "GDG Hackathon AI Assistant",
   "description": "A smart companion for Google Developer Group hackathons, providing project ideas, technical FAQs, and AI-powered brainstorming.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }

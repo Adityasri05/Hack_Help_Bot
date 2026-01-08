@@ -1,4 +1,11 @@
 
+export interface User {
+  email: string;
+  name: string;
+  photoURL?: string;
+  isAuthenticated: boolean;
+}
+
 export interface Message {
   id: string;
   text: string;
