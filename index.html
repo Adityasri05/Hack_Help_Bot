@@ -31,6 +31,16 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      /* Markdown Preview Styling */
+      .markdown-content h1 { font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem; }
+      .markdown-content h2 { font-size: 1.1rem; font-weight: bold; margin-bottom: 0.4rem; }
+      .markdown-content p { margin-bottom: 0.5rem; }
+      .markdown-content ul { list-style-type: disc; margin-left: 1.25rem; margin-bottom: 0.5rem; }
+      .markdown-content ol { list-style-type: decimal; margin-left: 1.25rem; margin-bottom: 0.5rem; }
+      .markdown-content code { background-color: rgba(0,0,0,0.1); padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-family: monospace; }
+      .dark .markdown-content code { background-color: rgba(255,255,255,0.1); }
+      .markdown-content pre { background-color: rgba(0,0,0,0.05); padding: 0.5rem; border-radius: 0.4rem; overflow-x: auto; margin-bottom: 0.5rem; }
+      .dark .markdown-content pre { background-color: rgba(255,255,255,0.05); }
     </style>
   <script type="importmap">
 {
@@ -38,7 +48,9 @@
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "marked": "https://esm.sh/marked@^15.0.0",
+    "dompurify": "https://esm.sh/dompurify@^3.2.3"
   }
 }
 </script>
