@@ -18,7 +18,6 @@ Goal: learning, networking, and having fun!
 
 export const askGemini = async (prompt: string): Promise<string> => {
   try {
-    // Strictly adhering to: Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const response = await ai.models.generateContent({
@@ -37,7 +36,7 @@ export const askGemini = async (prompt: string): Promise<string> => {
     if (String(error).includes("429")) {
       return "⚠️ The hackathon is busy! Let's take a 60-second breather before we dive back in.";
     }
-    return "⚠️ I had a momentary glitch. Please ensure your Vercel Environment Variable 'API_KEY' is set correctly!";
+    return "⚠️ I had a momentary glitch. Please ensure your API_KEY is set correctly in the environment configuration!";
   }
 };
 
@@ -45,16 +44,14 @@ export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): 
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
-    // Prepare image parts for the multimodal request
-    const parts = frames.map(base64 => ({
+    const parts: any[] = frames.map(base64 => ({
       inlineData: {
         data: base64.split(',')[1],
         mimeType: 'image/jpeg',
       },
     }));
 
-    // Add the text prompt as the last part
-    parts.push({ text: prompt } as any);
+    parts.push({ text: prompt });
 
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
@@ -68,6 +65,6 @@ export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): 
     return response.text || "I saw the video, but I'm struggling to find the words to describe it.";
   } catch (error: any) {
     console.error("Gemini Video Analysis Error:", error);
-    return "⚠️ Vision processing overloaded. Please check your API key and project billing status on Google AI Studio.";
+    return "⚠️ Vision processing overloaded. Please check your API key and project status on Google AI Studio.";
   }
 };

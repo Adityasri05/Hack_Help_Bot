@@ -4,6 +4,9 @@ export interface User {
   name: string;
   photoURL?: string;
   isAuthenticated: boolean;
+  bio?: string;
+  github?: string;
+  techStack?: string;
 }
 
 export interface Message {
@@ -15,6 +18,8 @@ export interface Message {
 }
 
 export type Domain = 'AI/ML' | 'Web Dev' | 'Android';
+
+export type AppView = 'dashboard' | 'chat' | 'leads' | 'events' | 'resources';
 
 export interface FAQItem {
   question: string;
