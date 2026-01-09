@@ -126,7 +126,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
       <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-800">
         <div className="p-8 sm:p-10">
           <div className="flex justify-center mb-8">
-            <GDGLogo className="w-16 h-16" />
+            <GDGLogo />
           </div>
           
           <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-2">

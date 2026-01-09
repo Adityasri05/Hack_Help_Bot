@@ -7,18 +7,14 @@ import Auth from './components/Auth';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
-// High-fidelity SVG of the GDG brackets logo provided by the user
-export const GDGLogo = ({ className = "w-8 h-8" }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
-    {/* Left Bracket Pillar 1 (Red) */}
-    <rect x="18" y="28" width="45" height="18" rx="9" fill="#EA4335" transform="rotate(45 18 28)" />
-    {/* Left Bracket Pillar 2 (Blue) */}
-    <rect x="5" y="55" width="45" height="18" rx="9" fill="#4285F4" transform="rotate(-45 5 55)" />
-    {/* Right Bracket Pillar 1 (Green) */}
-    <rect x="45" y="15" width="45" height="18" rx="9" fill="#34A853" transform="rotate(45 45 15)" />
-    {/* Right Bracket Pillar 2 (Yellow) */}
-    <rect x="35" y="85" width="45" height="18" rx="9" fill="#FBBC05" transform="rotate(-45 35 85)" />
-  </svg>
+// The "old default logo" style: 4 colored dots in a pill container
+export const GDGLogo = ({ className = "" }: { className?: string }) => (
+  <div className={`flex gap-1.5 p-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-full px-3 border border-slate-100 dark:border-slate-700 shadow-inner ${className}`}>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#EA4335]"></div>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></div>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#34A853]"></div>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#FBBC05]"></div>
+  </div>
 );
 
 const App: React.FC = () => {
@@ -547,7 +543,7 @@ const App: React.FC = () => {
             <div key={i} className={`p-8 rounded-[2.5rem] border shadow-lg flex items-center justify-between group transition-all duration-300 hover:scale-[1.01] ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'}`}>
               <div className="flex gap-6 items-center">
                 <div className={`w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-500 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500`}>
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 00-2 2z" /></svg>
+                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" /></svg>
                 </div>
                 <div>
                   <h4 className="font-black text-xl mb-1">{event.title}</h4>
@@ -623,7 +619,7 @@ const App: React.FC = () => {
               onClick={() => setCurrentView('dashboard')}
               className="flex items-center gap-3 hover:opacity-80 transition-all active:scale-[0.98]"
             >
-              <GDGLogo className="w-9 h-9" />
+              <GDGLogo />
               <h1 className="text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">GDG Assistant</h1>
             </button>
           </div>
@@ -727,7 +723,7 @@ const App: React.FC = () => {
                     ) : (
                       <div className="relative">
                         <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-[1.25rem] flex items-center justify-center shadow-xl border relative z-10 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
-                          <GDGLogo className="w-6 h-6 sm:w-7 sm:h-7" />
+                          <GDGLogo />
                         </div>
                       </div>
                     )}
@@ -773,7 +769,7 @@ const App: React.FC = () => {
               {(isLoading || isProcessingVideo) && (
                 <div className="flex flex-row gap-5 animate-in fade-in slide-in-from-left-8 duration-700">
                    <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-[1.25rem] flex items-center justify-center shadow-xl border ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
-                    <GDGLogo className="w-6 h-6 sm:w-7 sm:h-7 animate-pulse" />
+                    <GDGLogo className="animate-pulse" />
                   </div>
                   <div className={`p-5 px-7 rounded-[2rem] rounded-bl-none border shadow-lg flex items-center gap-3 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500">{isProcessingVideo ? "Analyzing Visuals" : "Mentor Thinking"}</span>
@@ -791,7 +787,7 @@ const App: React.FC = () => {
             <footer className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'} border-t transition-all z-10 p-5 sm:p-7`}>
               <div className="flex gap-4 w-full">
                 <button onClick={() => videoInputRef.current?.click()} className={`p-4 rounded-[1.5rem] shadow-lg transition-all active:scale-90 ${selectedVideo ? 'bg-blue-600 text-white shadow-blue-500/30' : darkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2-2v8a2 2 0 00-2 2z" /></svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 00-2 2z" /></svg>
                   <input type="file" ref={videoInputRef} onChange={handleVideoSelect} className="hidden" accept="video/*" />
                 </button>
                 <button 
