@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from "@google/genai";
 
 const SYSTEM_INSTRUCTION = `
@@ -18,7 +17,7 @@ Goal: learning, networking, and having fun!
 
 export const askGemini = async (prompt: string): Promise<string> => {
   try {
-    const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -36,13 +35,13 @@ export const askGemini = async (prompt: string): Promise<string> => {
     if (String(error).includes("429")) {
       return "⚠️ The hackathon is busy! Let's take a 60-second breather before we dive back in.";
     }
-    return "⚠️ I had a momentary glitch. Please ensure your API key is correctly configured for global hosting!";
+    return "⚠️ I had a momentary glitch. Please ensure your environment is correctly configured!";
   }
 };
 
 export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): Promise<string> => {
   try {
-    const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const parts: any[] = frames.map(base64 => ({
       inlineData: {
@@ -54,7 +53,7 @@ export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): 
     parts.push({ text: prompt });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-3-flash-preview',
       contents: { parts },
       config: {
         systemInstruction: SYSTEM_INSTRUCTION + "\n\nYou are now acting as a Video Analysis Mentor. Use the visual cues from the provided frames to give insightful advice.",
@@ -65,6 +64,6 @@ export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): 
     return response.text || "I saw the video, but I'm struggling to find the words to describe it.";
   } catch (error: any) {
     console.error("Gemini Video Analysis Error:", error);
-    return "⚠️ Vision processing overloaded. Please check your API key and project status on Google AI Studio.";
+    return "⚠️ Vision processing encountered an error. Please check your configuration and try again.";
   }
 };
