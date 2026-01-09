@@ -18,7 +18,7 @@ Goal: learning, networking, and having fun!
 
 export const askGemini = async (prompt: string): Promise<string> => {
   try {
-    const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -36,13 +36,13 @@ export const askGemini = async (prompt: string): Promise<string> => {
     if (String(error).includes("429")) {
       return "⚠️ The hackathon is busy! Let's take a 60-second breather before we dive back in.";
     }
-    return "⚠️ I had a momentary glitch. Please ensure your API_KEY is set correctly in the environment configuration!";
+    return "⚠️ I had a momentary glitch. Please ensure your API key is correctly configured for global hosting!";
   }
 };
 
 export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): Promise<string> => {
   try {
-    const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const parts: any[] = frames.map(base64 => ({
       inlineData: {
