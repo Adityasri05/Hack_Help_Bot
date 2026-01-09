@@ -10,11 +10,11 @@ import DOMPurify from 'dompurify';
 // The "old default logo" style: 4 colored dots in a pill container
 // Now intended EXCLUSIVELY for the header next to the title.
 export const GDGLogo = ({ className = "" }: { className?: string }) => (
-  <div className={`flex gap-1.5 p-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-full px-2.5 sm:px-3 border border-slate-100 dark:border-slate-700 shadow-inner ${className}`}>
-    <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#EA4335]"></div>
-    <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#4285F4]"></div>
-    <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#34A853]"></div>
-    <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#FBBC05]"></div>
+  <div className={`flex gap-1.5 p-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-full px-3 border border-slate-100 dark:border-slate-700 shadow-inner ${className}`}>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#EA4335]"></div>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></div>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#34A853]"></div>
+    <div className="w-2.5 h-2.5 rounded-full bg-[#FBBC05]"></div>
   </div>
 );
 
@@ -396,18 +396,18 @@ const App: React.FC = () => {
 
   // View Components
   const Dashboard = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 animate-in fade-in slide-in-from-bottom-6 duration-700 relative">
-      <div className="max-w-4xl mx-auto space-y-8 sm:y-12">
-        <div className="text-center space-y-3 sm:space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 mb-2">
+    <div className="flex-1 overflow-y-auto p-6 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-700 relative">
+      <div className="max-w-4xl mx-auto space-y-12">
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 mb-2">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">GDG Chapter Workspace</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">GDG Chapter Workspace</span>
           </div>
-          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>GDG Launchpad</h2>
-          <p className="text-sm sm:text-base md:text-lg text-slate-500 font-medium max-w-2xl mx-auto px-4">Welcome back, <span className="text-blue-600 font-bold">{user.name}</span>! Elevate your hackathon performance with specialized GDG tools.</p>
+          <h2 className={`text-5xl font-black tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>GDG Launchpad</h2>
+          <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">Welcome back, <span className="text-blue-600 font-bold">{user.name}</span>! Elevate your hackathon performance with specialized GDG tools.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 pb-12 px-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pb-12">
           {[
             { 
               view: 'chat', 
@@ -430,7 +430,7 @@ const App: React.FC = () => {
               color: 'yellow', 
               title: 'Timeline', 
               desc: 'Official event schedule, session topics, and judging rounds.',
-              icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z",
+              icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 00-2 2z",
               gradient: 'from-yellow-500 to-amber-600'
             },
             { 
@@ -445,16 +445,16 @@ const App: React.FC = () => {
             <button 
               key={idx}
               onClick={() => setCurrentView(item.view as AppView)}
-              className={`group relative p-6 sm:p-10 rounded-[2rem] sm:rounded-[3rem] border text-left transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl overflow-hidden ${
-                darkMode ? 'bg-slate-800/40 border-slate-700/50 hover:bg-slate-800' : 'bg-white border-slate-100'
+              className={`group relative p-10 rounded-[3rem] border text-left transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] shadow-xl overflow-hidden ${
+                darkMode ? 'bg-slate-800/40 border-slate-700/50 hover:bg-slate-800' : 'bg-white border-slate-100 hover:shadow-2xl'
               }`}
             >
-              <div className={`absolute top-0 right-0 w-24 h-24 sm:w-40 sm:h-40 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 blur-3xl transition-opacity duration-500`}></div>
-              <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${item.gradient} rounded-2xl sm:rounded-3xl flex items-center justify-center text-white mb-6 sm:mb-8 shadow-md group-hover:rotate-[5deg] transition-all duration-500`}>
-                <svg className="w-6 h-6 sm:w-9 sm:h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
+              <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 blur-3xl transition-opacity duration-500`}></div>
+              <div className={`w-16 h-16 bg-gradient-to-br ${item.gradient} rounded-3xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:rotate-[10deg] transition-all duration-500`}>
+                <svg className="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
               </div>
-              <h3 className={`text-xl sm:text-2xl font-black mb-2 sm:mb-3 ${darkMode ? 'text-white' : 'text-slate-900'}`}>{item.title}</h3>
-              <p className="text-xs sm:text-sm md:text-md text-slate-500 leading-relaxed font-medium group-hover:text-slate-400 transition-colors line-clamp-2 sm:line-clamp-none">{item.desc}</p>
+              <h3 className={`text-2xl font-black mb-3 ${darkMode ? 'text-white' : 'text-slate-900'}`}>{item.title}</h3>
+              <p className="text-md text-slate-500 leading-relaxed font-medium group-hover:text-slate-400 transition-colors">{item.desc}</p>
             </button>
           ))}
         </div>
@@ -462,31 +462,31 @@ const App: React.FC = () => {
 
       <button 
         onClick={() => setActiveModal('about')}
-        className={`fixed bottom-6 right-6 sm:bottom-8 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-90 z-50 ${
+        className={`fixed bottom-8 right-8 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-90 z-50 ${
           darkMode ? 'bg-slate-800 text-blue-400 border border-slate-700' : 'bg-white text-blue-600 border border-slate-100'
         }`}
         title="About the App"
       >
         <span className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping opacity-20"></span>
-        <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
       </button>
     </div>
   );
 
   const LeadsView = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in-95 duration-500">
-      <div className="max-w-4xl mx-auto space-y-8 sm:space-y-10">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`self-start p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+    <div className="flex-1 overflow-y-auto p-8 animate-in fade-in zoom-in-95 duration-500">
+      <div className="max-w-4xl mx-auto space-y-10">
+        <div className="flex items-center gap-6">
+          <button onClick={() => setCurrentView('dashboard')} className={`p-4 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
           <div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">GDG Leads</h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium">Chapter experts available for mentorship (19 members).</p>
+            <h2 className="text-4xl font-black tracking-tight">GDG Leads</h2>
+            <p className="text-slate-500 font-medium">Chapter experts available for mentorship (19 members).</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 pb-12">
           {[
             { name: "Rahul Sharma", role: "GDG Organizer", email: "rahul.sharma@gdg.community", color: "from-blue-500 to-blue-600" },
             { name: "Anita Desai", role: "WTM Ambassador", email: "anita.desai@wtm.ambassador", color: "from-red-500 to-red-600" },
@@ -508,21 +508,21 @@ const App: React.FC = () => {
             { name: "Nikhil Gupta", role: "Backend Developer", email: "nikhil.g@api.google", color: "from-fuchsia-500 to-fuchsia-600" },
             { name: "Zara Wilson", role: "Quality Assurance", email: "zara.w@qa.google", color: "from-gray-500 to-gray-600" }
           ].map((lead, i) => (
-            <div key={i} className={`group p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border shadow-md flex flex-col gap-4 sm:gap-6 transition-all duration-300 hover:border-blue-500/30 ${
+            <div key={i} className={`group p-8 rounded-[2.5rem] border shadow-lg flex flex-col gap-6 transition-all duration-300 hover:border-blue-500/30 ${
               darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'
             }`}>
-              <div className="flex items-center gap-4 sm:gap-5">
-                <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${lead.color} rounded-[1rem] sm:rounded-[1.25rem] flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-inner`}>
+              <div className="flex items-center gap-5">
+                <div className={`w-16 h-16 bg-gradient-to-br ${lead.color} rounded-[1.25rem] flex items-center justify-center text-white font-black text-2xl shadow-inner`}>
                   {lead.name[0]}
                 </div>
                 <div>
-                  <h4 className={`font-black text-lg sm:text-xl ${darkMode ? 'text-white' : 'text-slate-900'}`}>{lead.name}</h4>
-                  <p className="text-[10px] sm:text-sm font-bold text-blue-500 uppercase tracking-widest">{lead.role}</p>
+                  <h4 className={`font-black text-xl ${darkMode ? 'text-white' : 'text-slate-900'}`}>{lead.name}</h4>
+                  <p className="text-sm font-bold text-blue-500 uppercase tracking-widest">{lead.role}</p>
                 </div>
               </div>
-              <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border flex items-center gap-2 sm:gap-3 ${darkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50 border-slate-100'}`}>
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" /></svg>
-                <span className={`text-[10px] sm:text-sm font-mono font-medium truncate select-all ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+              <div className={`p-4 rounded-2xl border flex items-center gap-3 ${darkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50 border-slate-100'}`}>
+                <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" /></svg>
+                <span className={`text-sm font-mono font-medium select-all ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                   {lead.email}
                 </span>
               </div>
@@ -533,123 +533,40 @@ const App: React.FC = () => {
     </div>
   );
 
-  const EventsView = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in-95 duration-500">
-      <div className="max-w-4xl mx-auto space-y-8 sm:space-y-10">
-        <div className="flex items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-          </button>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Timeline</h2>
-        </div>
-        <div className="space-y-4 sm:space-y-6">
-          {[
-            { title: "DevFest 2024", date: "Oct 15, 2024", type: "Conference", status: "Open" },
-            { title: "Hack-A-Thon Sprint", date: "Nov 02, 2024", type: "Coding", status: "Coming Soon" },
-            { title: "WTM Summit", date: "Dec 10, 2024", type: "Networking", status: "Registration Open" }
-          ].map((event, i) => (
-            <div key={i} className={`p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 group transition-all duration-300 hover:scale-[1.01] ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'}`}>
-              <div className="flex gap-4 sm:gap-6 items-center">
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 bg-slate-100 dark:bg-slate-700 rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-500 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500`}>
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" /></svg>
-                </div>
-                <div>
-                  <h4 className="font-black text-lg sm:text-xl mb-0.5 sm:mb-1">{event.title}</h4>
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[10px] sm:text-xs font-bold text-slate-500">
-                    <span className="flex items-center gap-1.5"><svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" /></svg>{event.date}</span>
-                    <span className="hidden sm:block w-1.5 h-1.5 bg-slate-300 rounded-full"></span>
-                    <span className="flex items-center gap-1.5 uppercase tracking-widest">{event.type}</span>
-                  </div>
-                </div>
-              </div>
-              <div className={`self-start sm:self-center px-4 sm:px-5 py-1.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] border shadow-sm transition-all duration-300 ${
-                event.status === 'Open' ? 'bg-green-500/10 text-green-600 border-green-200 dark:border-green-900/30' : 
-                event.status === 'Coming Soon' ? 'bg-yellow-500/10 text-yellow-600 border-yellow-200 dark:border-yellow-900/30' : 
-                'bg-blue-500/10 text-blue-600 border-blue-200 dark:border-blue-900/30'
-              }`}>
-                {event.status}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  const ResourcesView = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in-95 duration-500">
-      <div className="max-w-4xl mx-auto space-y-8 sm:space-y-10">
-        <div className="flex items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-          </button>
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Dev Toolbox</h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium">Core Google technologies for builders.</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-          {[
-            { name: "Firebase", category: "Full Stack", desc: "Backend-as-a-Service including Hosting, Auth, and NoSQL databases for rapid MVP development.", color: 'bg-yellow-500' },
-            { name: "Gemini API", category: "Intelligence", desc: "Access Google's most capable multimodal AI models for intelligent features in your app.", color: 'bg-blue-600' },
-            { name: "Google Cloud", category: "Infrastructure", desc: "Scalable computing, storage, and advanced specialized APIs for vision and speech.", color: 'bg-blue-400' },
-            { name: "Flutter", category: "Mobile/Web", desc: "Build beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.", color: 'bg-indigo-500' },
-            { name: "TensorFlow", category: "Machine Learning", desc: "The end-to-end open source platform for machine learning, from research to production.", color: 'bg-orange-500' },
-            { name: "Material Design", category: "UI/UX", desc: "Google's open-source design system to help teams build high-quality digital experiences.", color: 'bg-red-500' }
-          ].map((tool, i) => (
-            <div key={i} className={`p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border shadow-md transition-all hover:bg-slate-50/50 group active:scale-[0.98] ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'}`}>
-              <div className="flex items-start justify-between mb-4 sm:mb-6">
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 ${tool.color} rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
-                   <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                </div>
-                <span className={`px-2.5 py-1 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border ${darkMode ? 'bg-slate-900 border-slate-700 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-500'}`}>
-                  {tool.category}
-                </span>
-              </div>
-              <h4 className="font-black text-lg sm:text-xl mb-2 sm:mb-3">{tool.name}</h4>
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium mb-4">{tool.desc}</p>
-              <div className="h-1 w-12 bg-blue-500/20 rounded-full group-hover:w-full transition-all duration-700"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
   return (
-    <div className={`min-h-[100dvh] ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} font-sans flex flex-col items-center transition-colors duration-500`}>
-      <div className={`flex flex-col h-[100dvh] w-full max-w-4xl shadow-2xl relative overflow-hidden transition-all duration-300 ${darkMode ? 'bg-slate-900 border-x border-slate-800' : 'bg-white'}`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} font-sans flex flex-col items-center transition-colors duration-500`}>
+      <div className={`flex flex-col h-screen w-full max-w-4xl shadow-2xl relative overflow-hidden transition-all duration-300 ${darkMode ? 'bg-slate-900 border-x border-slate-800' : 'bg-white'}`}>
         
         {/* Header */}
-        <header className={`${darkMode ? 'bg-slate-900/95 border-slate-800' : 'bg-white/95 border-slate-100'} backdrop-blur-md border-b p-3 sm:p-5 flex items-center justify-between sticky top-0 z-40`}>
-          <div className="flex items-center gap-3">
+        <header className={`${darkMode ? 'bg-slate-900/95 border-slate-800' : 'bg-white/95 border-slate-100'} backdrop-blur-md border-b p-5 flex items-center justify-between sticky top-0 z-40`}>
+          <div className="flex items-center gap-4">
             <button 
               onClick={() => setCurrentView('dashboard')}
-              className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all active:scale-[0.98]"
+              className="flex items-center gap-3 hover:opacity-80 transition-all active:scale-[0.98]"
             >
               <GDGLogo />
-              <h1 className="text-lg sm:text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">GDG Assistant</h1>
+              <h1 className="text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">GDG Assistant</h1>
             </button>
           </div>
           
           <div className="relative" ref={menuRef}>
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`flex items-center gap-2 sm:gap-3 p-1 rounded-full transition-all border border-transparent ${darkMode ? 'hover:bg-slate-800 hover:border-slate-700' : 'hover:bg-slate-50 hover:border-slate-200'}`}
+              className={`flex items-center gap-3 p-1.5 rounded-full transition-all border border-transparent ${darkMode ? 'hover:bg-slate-800 hover:border-slate-700' : 'hover:bg-slate-50 hover:border-slate-200'}`}
             >
-              <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.name}`} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover shadow-sm ring-2 ring-blue-500/10 group-hover:ring-blue-500 transition-all" alt="Profile" />
+              <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.name}`} className="w-9 h-9 rounded-full object-cover shadow-sm ring-2 ring-blue-500/10 group-hover:ring-blue-500 transition-all" alt="Profile" />
               <div className="hidden sm:block text-left mr-1">
                 <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Session</p>
                 <p className="text-[11px] font-bold truncate max-w-[80px]">{user.name.split(' ')[0]}</p>
               </div>
-              <svg className={`w-3 h-3 sm:w-4 sm:h-4 text-slate-400 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              <svg className={`w-4 h-4 text-slate-400 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </button>
 
             {isMenuOpen && (
-              <div className={`absolute right-0 mt-3 w-56 sm:w-64 border shadow-2xl rounded-[1.5rem] sm:rounded-3xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
-                <div className={`px-5 py-3 sm:py-4 border-b mb-1 ${darkMode ? 'border-slate-700' : 'border-slate-50'}`}>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Authenticated</p>
-                  <p className={`text-xs sm:text-sm font-black truncate ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>{user.name}</p>
+              <div className={`absolute right-0 mt-3 w-64 border shadow-2xl rounded-3xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
+                <div className={`px-5 py-4 border-b mb-1 ${darkMode ? 'border-slate-700' : 'border-slate-50'}`}>
+                  <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Authenticated</p>
+                  <p className={`text-sm font-black truncate ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>{user.name}</p>
                 </div>
                 
                 {[
@@ -660,20 +577,20 @@ const App: React.FC = () => {
                   <button 
                     key={item.id}
                     onClick={() => { setActiveModal(item.id as any); setIsMenuOpen(false); }} 
-                    className={`w-full text-left px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-bold flex items-center gap-3 transition-colors ${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'}`}
+                    className={`w-full text-left px-5 py-3.5 text-sm font-bold flex items-center gap-3 transition-colors ${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'}`}
                   >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
                     {item.label}
                   </button>
                 ))}
 
                 <div className={`border-t mt-1 ${darkMode ? 'border-slate-700' : 'border-slate-50'}`}>
-                  <button onClick={() => { setActiveModal('confirmClear'); setIsMenuOpen(false); }} className="w-full text-left px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  <button onClick={() => { setActiveModal('confirmClear'); setIsMenuOpen(false); }} className="w-full text-left px-5 py-3.5 text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     Clear History
                   </button>
-                  <button onClick={handleLogout} className="w-full text-left px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                  <button onClick={handleLogout} className="w-full text-left px-5 py-3.5 text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                     Sign Out
                   </button>
                 </div>
@@ -685,87 +602,87 @@ const App: React.FC = () => {
         {/* Content View Routing */}
         {currentView === 'dashboard' && <Dashboard />}
         {currentView === 'leads' && <LeadsView />}
-        {currentView === 'events' && <EventsView />}
-        {currentView === 'resources' && <ResourcesView />}
+        {currentView === 'events' && <LeadsView />}
+        {currentView === 'resources' && <LeadsView />}
 
         {currentView === 'chat' && (
           <>
-            <div className={`px-3 sm:px-5 py-3 sm:py-4 border-b flex items-center justify-between sticky top-0 z-30 ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-100'}`}>
+            <div className={`px-5 py-4 border-b flex items-center justify-between sticky top-0 z-30 ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-100'}`}>
               <button 
                 onClick={() => setCurrentView('dashboard')}
-                className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 shadow-sm ${darkMode ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 shadow-sm ${darkMode ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
-                <svg className="w-3.5 h-3.5 sm:w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                <span className="hidden xs:inline">Dashboard</span>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                Dashboard
               </button>
 
-              <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-4">
                 <button 
                   onClick={() => setIsSpeechEnabled(!isSpeechEnabled)}
-                  className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl transition-all active:scale-90 border flex items-center gap-1.5 sm:gap-2 ${isSpeechEnabled ? 'bg-blue-600 border-blue-500 text-white' : darkMode ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-white border-slate-200 text-slate-500'}`}
+                  className={`p-2.5 rounded-xl transition-all active:scale-90 border flex items-center gap-2 ${isSpeechEnabled ? 'bg-blue-600 border-blue-500 text-white' : darkMode ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-white border-slate-200 text-slate-500'}`}
                   title={isSpeechEnabled ? "Auto-read Enabled" : "Auto-read Disabled"}
                 >
-                  <svg className="w-3.5 h-3.5 sm:w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
-                  <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest hidden sm:block">{isSpeechEnabled ? "ON" : "OFF"}</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                  <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">{isSpeechEnabled ? "ON" : "OFF"}</span>
                 </button>
-                <div className="flex items-center gap-1.5 sm:gap-3">
-                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/20"></div>
-                  <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest opacity-60">Mentor Online</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/20"></div>
+                  <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Mentor Online</span>
                 </div>
               </div>
             </div>
 
             <main 
               ref={scrollRef}
-              className={`flex-1 overflow-y-auto p-3 sm:p-5 md:p-8 space-y-8 sm:space-y-12 chat-scrollbar transition-all duration-300 relative ${darkMode ? 'bg-slate-950' : 'bg-white'}`}
+              className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-12 chat-scrollbar transition-all duration-300 relative ${darkMode ? 'bg-slate-950' : 'bg-white'}`}
               style={getBackgroundStyle()}
             >
               {messages.map((m) => (
                 <div 
                   key={m.id} 
-                  className={`flex gap-3 sm:gap-4 md:gap-6 ${m.sender === 'user' ? 'flex-row-reverse' : 'flex-row'} animate-in fade-in duration-700 ${m.sender === 'user' ? 'slide-in-from-right-4' : 'slide-in-from-left-4'}`}
+                  className={`flex gap-4 sm:gap-6 ${m.sender === 'user' ? 'flex-row-reverse' : 'flex-row'} animate-in fade-in duration-700 ${m.sender === 'user' ? 'slide-in-from-right-8' : 'slide-in-from-left-8'}`}
                 >
                   <div className="flex-shrink-0 mt-auto mb-1 relative">
                     {m.sender === 'user' ? (
-                      <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.name}`} className="w-8 h-8 sm:w-9 sm:h-9 md:w-11 md:h-11 rounded-full object-cover shadow-xl ring-2 ring-blue-500/10" alt="User" />
+                      <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.name}`} className="w-9 h-9 sm:w-11 sm:h-11 rounded-full object-cover shadow-xl ring-2 ring-blue-500/10" alt="User" />
                     ) : (
                       <div className="relative">
-                        <div className={`w-8 h-8 sm:w-9 sm:h-9 md:w-11 md:h-11 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center shadow-xl border relative z-10 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
-                          <MentorIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-blue-500" />
+                        <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-[1.25rem] flex items-center justify-center shadow-xl border relative z-10 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
+                          <MentorIcon className="w-6 h-6 sm:w-7 sm:h-7 text-blue-500" />
                         </div>
                       </div>
                     )}
                   </div>
 
-                  <div className={`flex flex-col max-w-[85%] sm:max-w-[80%] md:max-w-[75%] group relative ${m.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                    <div className={`px-4 sm:px-6 md:px-7 py-3 sm:py-4 md:py-5 shadow-lg transition-all duration-500 relative ${
+                  <div className={`flex flex-col max-w-[85%] sm:max-w-[75%] group relative ${m.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                    <div className={`px-7 py-5 shadow-lg transition-all duration-500 relative ${
                       m.sender === 'user' 
-                        ? 'bg-gradient-to-br from-indigo-600 to-blue-700 text-white rounded-[1.25rem] sm:rounded-[2rem] rounded-br-none' 
+                        ? 'bg-gradient-to-br from-indigo-600 to-blue-700 text-white rounded-[2rem] rounded-br-none' 
                         : darkMode 
-                          ? 'bg-slate-800 text-slate-100 border-l-4 border-l-blue-500 rounded-[1.25rem] sm:rounded-[2rem] rounded-bl-none' 
-                          : 'bg-slate-50 text-slate-800 border border-slate-200 rounded-[1.25rem] sm:rounded-[2rem] rounded-bl-none hover:border-blue-200'
+                          ? 'bg-slate-800 text-slate-100 border-l-4 border-l-blue-500 rounded-[2rem] rounded-bl-none' 
+                          : 'bg-slate-50 text-slate-800 border border-slate-200 rounded-[2rem] rounded-bl-none hover:border-blue-200'
                     }`}>
-                      <div className={`text-sm sm:text-base whitespace-pre-wrap leading-relaxed markdown-content ${compactMode ? 'text-xs sm:text-sm' : ''}`} dangerouslySetInnerHTML={renderMarkdown(m.text)}></div>
+                      <div className={`text-md whitespace-pre-wrap leading-relaxed markdown-content ${compactMode ? 'text-sm' : 'text-md'}`} dangerouslySetInnerHTML={renderMarkdown(m.text)}></div>
                     </div>
 
-                    <div className={`flex items-center gap-2 sm:gap-4 mt-2 sm:mt-3 ${m.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <span className={`text-[8px] sm:text-[10px] font-black tracking-[0.2em] opacity-30 uppercase`}>
+                    <div className={`flex items-center gap-4 mt-3 ${m.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                      <span className={`text-[10px] font-black tracking-[0.2em] opacity-30 uppercase`}>
                         {m.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                       {m.sender === 'bot' && (
-                        <span className={`px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[7px] sm:text-[9px] font-black uppercase tracking-[0.2em] border ${darkMode ? 'bg-blue-900/30 text-blue-400 border-blue-800' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
-                          Mentor
+                        <span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${darkMode ? 'bg-blue-900/30 text-blue-400 border-blue-800' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
+                          Official Mentor
                         </span>
                       )}
-                      <div className={`flex items-center gap-1 sm:gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300`}>
-                        <button onClick={() => speak(m.text)} className="p-1.5 rounded-full text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Read message">
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                      <div className={`flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300`}>
+                        <button onClick={() => speak(m.text)} className="p-2 rounded-full text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Read message">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                         </button>
-                        <button onClick={() => handleCopy(m.text, m.id)} className={`p-1.5 rounded-full transition-colors ${copiedId === m.id ? 'text-green-500' : 'text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-700'}`}>
+                        <button onClick={() => handleCopy(m.text, m.id)} className={`p-2 rounded-full transition-colors ${copiedId === m.id ? 'text-green-500' : 'text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-700'}`}>
                           {copiedId === m.id ? (
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                           ) : (
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                           )}
                         </button>
                       </div>
@@ -775,16 +692,16 @@ const App: React.FC = () => {
               ))}
 
               {(isLoading || isProcessingVideo) && (
-                <div className="flex flex-row gap-3 sm:gap-5 animate-in fade-in slide-in-from-left-4 duration-700">
-                   <div className={`w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center shadow-xl border ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
-                    <MentorIcon className="animate-pulse text-blue-500 w-5 h-5 sm:w-7 sm:h-7" />
+                <div className="flex flex-row gap-5 animate-in fade-in slide-in-from-left-8 duration-700">
+                   <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-[1.25rem] flex items-center justify-center shadow-xl border ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
+                    <MentorIcon className="animate-pulse text-blue-500" />
                   </div>
-                  <div className={`p-3 sm:p-5 px-4 sm:px-7 rounded-xl sm:rounded-[2rem] rounded-bl-none border shadow-lg flex items-center gap-2 sm:gap-3 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
-                    <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-blue-500">{isProcessingVideo ? "Analyzing" : "Mentor Thinking"}</span>
-                    <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                  <div className={`p-5 px-7 rounded-[2rem] rounded-bl-none border shadow-lg flex items-center gap-3 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`}>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500">{isProcessingVideo ? "Analyzing Visuals" : "Mentor Thinking"}</span>
+                    <div className="flex gap-1.5">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                     </div>
                   </div>
                 </div>
@@ -792,32 +709,24 @@ const App: React.FC = () => {
             </main>
 
             {/* Chat Footer */}
-            <footer className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'} border-t transition-all z-10 p-3 sm:p-5 md:p-7`}>
-              <div className="flex gap-2 sm:gap-4 w-full">
-                <button onClick={() => videoInputRef.current?.click()} className={`p-3 sm:p-4 rounded-xl sm:rounded-[1.5rem] shadow-md transition-all active:scale-90 ${selectedVideo ? 'bg-blue-600 text-white shadow-blue-500/30' : darkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 00-2 2z" /></svg>
+            <footer className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'} border-t p-5 sm:p-7`}>
+              <div className="flex gap-4 w-full">
+                <button onClick={() => videoInputRef.current?.click()} className={`p-4 rounded-[1.5rem] shadow-lg transition-all active:scale-90 ${selectedVideo ? 'bg-blue-600 text-white shadow-blue-500/30' : darkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 00-2 2z" /></svg>
                   <input type="file" ref={videoInputRef} onChange={handleVideoSelect} className="hidden" accept="video/*" />
                 </button>
                 <button 
                   onClick={toggleListening}
-                  className={`p-3 sm:p-4 rounded-xl sm:rounded-[1.5rem] shadow-md transition-all active:scale-90 ${isListening ? 'bg-red-500 text-white animate-pulse' : darkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+                  className={`p-4 rounded-[1.5rem] shadow-lg transition-all active:scale-90 ${isListening ? 'bg-red-500 text-white animate-pulse' : darkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                   title="Voice Command"
                 >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
                 </button>
                 <div className="flex-1 relative">
-                  <input 
-                    type="text" 
-                    value={input} 
-                    onChange={(e) => setInput(e.target.value)} 
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
-                    placeholder="Ask..." 
-                    className={`w-full h-full rounded-xl sm:rounded-[1.5rem] px-4 sm:px-8 py-3 sm:py-4 outline-none border transition-all font-bold text-sm sm:text-base ${darkMode ? 'bg-slate-800 border-slate-700 text-slate-100 focus:border-blue-500/50' : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-blue-500/50'}`} 
-                    disabled={isProcessingVideo} 
-                  />
+                  <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} placeholder="Ask your mentor..." className={`w-full h-full rounded-[1.5rem] px-8 py-4 outline-none border transition-all font-bold ${darkMode ? 'bg-slate-800 border-slate-700 text-slate-100 focus:border-blue-500/50' : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-blue-500/50'}`} disabled={isProcessingVideo} />
                 </div>
-                <button onClick={handleSend} disabled={(!input.trim() && videoFrames.length === 0) || isLoading || isProcessingVideo} className="bg-blue-600 text-white px-4 sm:px-8 rounded-xl sm:rounded-[1.5rem] font-black shadow-md shadow-blue-500/20 active:scale-95 transition-all">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                <button onClick={handleSend} disabled={(!input.trim() && videoFrames.length === 0) || isLoading || isProcessingVideo} className="bg-blue-600 text-white px-8 rounded-[1.5rem] font-black shadow-lg shadow-blue-500/20 active:scale-95 transition-all">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                 </button>
               </div>
             </footer>
@@ -826,126 +735,106 @@ const App: React.FC = () => {
 
         {/* Modals */}
         {activeModal && (
-          <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-3 sm:p-4 animate-in fade-in">
-            <div className={`rounded-[1.5rem] sm:rounded-[3rem] w-full max-w-lg shadow-2xl overflow-hidden ${darkMode ? 'bg-slate-900 border border-slate-800' : 'bg-white border'}`}>
-              <div className="p-6 sm:p-10">
-                <div className="flex justify-between items-center mb-6 sm:mb-10">
-                  <h3 className="text-2xl sm:text-3xl font-black capitalize tracking-tight">
-                    {activeModal === 'confirmClear' ? 'Reset' : 
-                     activeModal === 'history' ? 'Transcript' : 
-                     activeModal === 'settings' ? 'Settings' :
+          <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-4 animate-in fade-in">
+            <div className={`rounded-[3rem] w-full max-w-lg shadow-2xl overflow-hidden ${darkMode ? 'bg-slate-900 border border-slate-800' : 'bg-white border'}`}>
+              <div className="p-10">
+                <div className="flex justify-between items-center mb-10">
+                  <h3 className="text-3xl font-black capitalize tracking-tight">
+                    {activeModal === 'confirmClear' ? 'Reset Session' : 
+                     activeModal === 'history' ? 'Chat Log' : 
+                     activeModal === 'settings' ? 'Preferences' :
                      activeModal}
                   </h3>
                   <button onClick={() => setActiveModal(null)} className="p-2 text-slate-400 hover:text-blue-500">
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>
                 
-                <div className="max-h-[60dvh] overflow-y-auto chat-scrollbar pr-2">
+                <div className="max-h-[60vh] overflow-y-auto chat-scrollbar pr-2">
                    {activeModal === 'profile' && (
-                    <form onSubmit={handleUpdateProfile} className="space-y-4 sm:space-y-6 pb-4">
-                      <div className="flex flex-col items-center gap-4 sm:gap-6 mb-6">
-                        <img src={profilePic || `https://ui-avatars.com/api/?name=${editName}`} className={`w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 object-cover ${darkMode ? 'border-slate-800 shadow-blue-500/10' : 'border-slate-50 shadow-lg'}`} alt="Profile" />
-                        <button type="button" onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-blue-600 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-widest rounded-lg sm:rounded-xl shadow-lg active:scale-95 transition-transform">Update Avatar</button>
+                    <form onSubmit={handleUpdateProfile} className="space-y-6 pb-6">
+                      <div className="flex flex-col items-center gap-6 mb-8">
+                        <img src={profilePic || `https://ui-avatars.com/api/?name=${editName}`} className={`w-32 h-32 rounded-full border-4 object-cover ${darkMode ? 'border-slate-800 shadow-blue-500/10' : 'border-slate-50 shadow-lg'}`} alt="Profile" />
+                        <button type="button" onClick={() => fileInputRef.current?.click()} className="px-5 py-2.5 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg active:scale-95 transition-transform">Update Avatar</button>
                         <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
                       </div>
                       
-                      <div className="space-y-3 sm:space-y-4">
+                      <div className="space-y-4">
                         <div>
-                          <label className="block text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">Full Name</label>
-                          <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border font-bold transition-all text-sm ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`} placeholder="Name" />
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Full Identity Name</label>
+                          <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} className={`w-full px-6 py-4 rounded-2xl border font-bold transition-all ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`} placeholder="E.g. John Developer" />
                         </div>
                         
                         <div>
-                          <label className="block text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">Professional Bio</label>
-                          <textarea value={editBio} onChange={(e) => setEditBio(e.target.value)} className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border font-medium transition-all min-h-[80px] sm:min-h-[100px] resize-none text-sm ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`} placeholder="Your mission..." />
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Professional Bio</label>
+                          <textarea value={editBio} onChange={(e) => setEditBio(e.target.value)} className={`w-full px-6 py-4 rounded-2xl border font-medium transition-all min-h-[100px] resize-none ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`} placeholder="Tell us about your mission..." />
                         </div>
 
-                        <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">GitHub</label>
-                            <input type="text" value={editGithub} onChange={(e) => setEditGithub(e.target.value)} className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border font-bold transition-all text-sm ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`} placeholder="@user" />
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">GitHub Handle</label>
+                            <input type="text" value={editGithub} onChange={(e) => setEditGithub(e.target.value)} className={`w-full px-6 py-4 rounded-2xl border font-bold transition-all ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`} placeholder="@username" />
                           </div>
                           <div>
-                            <label className="block text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">Stack</label>
-                            <select value={editTechStack} onChange={(e) => setEditTechStack(e.target.value)} className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border font-bold transition-all text-sm ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`}>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Core Tech Stack</label>
+                            <select value={editTechStack} onChange={(e) => setEditTechStack(e.target.value)} className={`w-full px-6 py-4 rounded-2xl border font-bold transition-all ${darkMode ? 'bg-slate-800 border-slate-700 focus:border-blue-500' : 'bg-slate-50 border-slate-200 focus:border-blue-500'}`}>
                               <option value="">Select Stack</option>
-                              <option value="React">React</option>
-                              <option value="Flutter">Flutter</option>
-                              <option value="Cloud">Cloud</option>
-                              <option value="AI/ML">AI/ML</option>
+                              <option value="React">React / Web</option>
+                              <option value="Flutter">Flutter / Mobile</option>
+                              <option value="Cloud">Cloud / Backend</option>
+                              <option value="AI/ML">AI / Machine Learning</option>
+                              <option value="Other">Fullstack Generalist</option>
                             </select>
                           </div>
                         </div>
                       </div>
 
-                      <button type="submit" className="w-full py-4 sm:py-5 bg-blue-600 text-white font-black rounded-2xl sm:rounded-3xl shadow-xl shadow-blue-500/20 hover:bg-blue-700 transform active:scale-[0.98] transition-all uppercase tracking-widest text-[10px] sm:text-xs mt-2 sm:mt-4">Update Identity</button>
+                      <button type="submit" className="w-full py-5 bg-blue-600 text-white font-black rounded-3xl shadow-xl shadow-blue-500/20 hover:bg-blue-700 transform active:scale-[0.98] transition-all uppercase tracking-widest text-xs mt-4">Sync Global Identity</button>
                     </form>
                   )}
 
                   {activeModal === 'history' && (
-                    <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-4">
                       {messages.length > 0 ? (
-                        <div className={`p-4 sm:p-6 rounded-xl sm:rounded-2xl border ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                          <p className="text-[10px] sm:text-sm font-bold mb-4 opacity-60">Complete Transcript ({messages.length} entries)</p>
+                        <div className={`p-6 rounded-2xl border ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                          <p className="text-sm font-bold mb-4 opacity-60">Complete Transcript ({messages.length} entries)</p>
                           <div className="space-y-4">
                             {messages.map((msg, i) => (
-                              <div key={i} className="flex gap-2 sm:gap-3 items-start text-xs sm:text-sm border-b pb-4 last:border-0 dark:border-slate-700/50">
-                                <span className={`font-black uppercase text-[8px] sm:text-[9px] min-w-[30px] mt-1 ${msg.sender === 'bot' ? 'text-blue-500' : 'text-slate-400'}`}>{msg.sender === 'bot' ? 'Bot' : 'You'}</span>
-                                <p className="opacity-80 leading-relaxed truncate-3-lines">{msg.text}</p>
+                              <div key={i} className="flex gap-3 items-start text-sm border-b pb-4 last:border-0 dark:border-slate-700/50">
+                                <span className={`font-black uppercase text-[9px] min-w-[30px] mt-1 ${msg.sender === 'bot' ? 'text-blue-500' : 'text-slate-400'}`}>{msg.sender === 'bot' ? 'Mentor' : 'User'}</span>
+                                <p className="opacity-80 leading-relaxed">{msg.text}</p>
                               </div>
                             ))}
                           </div>
                         </div>
                       ) : (
-                        <p className="text-center py-8 opacity-40 italic">No history found.</p>
+                        <p className="text-center py-8 opacity-40 italic">No chat entries found.</p>
                       )}
                     </div>
                   )}
 
                   {activeModal === 'confirmClear' && (
                     <div className="space-y-6 text-center">
-                      <p className="text-base sm:text-lg font-medium text-slate-500">This will wipe your session history. Continue?</p>
-                      <div className="flex gap-3 sm:gap-4">
-                        <button onClick={() => { setWelcomeMessage(); localStorage.removeItem('gdg_chat_history'); setActiveModal(null); }} className="flex-1 py-3 sm:py-4 bg-red-600 text-white font-black rounded-xl sm:rounded-2xl shadow-lg hover:bg-red-700 transition-colors">Clear</button>
-                        <button onClick={() => setActiveModal(null)} className={`flex-1 py-3 sm:py-4 font-black rounded-xl sm:rounded-2xl transition-colors ${darkMode ? 'bg-slate-800 hover:bg-slate-700' : 'bg-slate-100 hover:bg-slate-200'}`}>Cancel</button>
+                      <p className="text-lg font-medium text-slate-500">This will wipe your session history and restart the chat. Continue?</p>
+                      <div className="flex gap-4">
+                        <button onClick={() => { setWelcomeMessage(); localStorage.removeItem('gdg_chat_history'); setActiveModal(null); }} className="flex-1 py-4 bg-red-600 text-white font-black rounded-2xl shadow-lg hover:bg-red-700 transition-colors">Yes, Clear</button>
+                        <button onClick={() => setActiveModal(null)} className={`flex-1 py-4 font-black rounded-2xl transition-colors ${darkMode ? 'bg-slate-800 hover:bg-slate-700' : 'bg-slate-100 hover:bg-slate-200'}`}>Cancel</button>
                       </div>
                     </div>
                   )}
 
                   {activeModal === 'settings' && (
-                    <div className="space-y-4 sm:space-y-6">
-                      <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                        <button onClick={() => setDarkMode(!darkMode)} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                          <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-1 gap-4">
+                        <button onClick={() => setDarkMode(!darkMode)} className={`w-full p-6 rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700 hover:bg-slate-700/50' : 'bg-slate-50 border-slate-200 hover:bg-slate-100'}`}>
+                          <div className="flex items-center gap-4">
                             <div className={`p-2 rounded-lg ${darkMode ? 'bg-slate-700 text-yellow-400' : 'bg-white text-blue-600 border'}`}>
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" /></svg>
                             </div>
-                            <span className="font-bold text-sm sm:text-base">Dark Theme</span>
+                            <span className="font-bold">Dark Theme</span>
                           </div>
-                          <div className={`w-10 sm:w-14 h-5 sm:h-7 rounded-full relative transition-all ${darkMode ? 'bg-blue-600' : 'bg-slate-300'}`}>
-                            <div className={`absolute top-0.5 sm:top-1 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full shadow-sm transition-all ${darkMode ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}></div>
-                          </div>
-                        </button>
-
-                        <button onClick={() => setBgType(bgType === 'grid' ? 'dots' : bgType === 'dots' ? 'plain' : 'grid')} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                          <div className="flex items-center gap-3 sm:gap-4">
-                            <div className={`p-2 rounded-lg ${darkMode ? 'bg-slate-700 text-purple-400' : 'bg-white text-purple-600 border'}`}>
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
-                            </div>
-                            <span className="font-bold text-sm sm:text-base">Background: <span className="capitalize text-blue-500">{bgType}</span></span>
-                          </div>
-                        </button>
-
-                        <button onClick={() => setCompactMode(!compactMode)} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                          <div className="flex items-center gap-3 sm:gap-4">
-                            <div className={`p-2 rounded-lg ${compactMode ? 'bg-blue-100 text-blue-600' : 'bg-white border text-slate-400'}`}>
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                            </div>
-                            <span className="font-bold text-sm sm:text-base">Compact Mode</span>
-                          </div>
-                          <div className={`w-10 sm:w-14 h-5 sm:h-7 rounded-full relative transition-all ${compactMode ? 'bg-blue-600' : 'bg-slate-300'}`}>
-                            <div className={`absolute top-0.5 sm:top-1 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full shadow-sm transition-all ${compactMode ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}></div>
+                          <div className={`w-14 h-7 rounded-full relative transition-all ${darkMode ? 'bg-blue-600' : 'bg-slate-300'}`}>
+                            <div className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-sm transition-all ${darkMode ? 'right-1' : 'left-1'}`}></div>
                           </div>
                         </button>
                       </div>
@@ -953,22 +842,22 @@ const App: React.FC = () => {
                   )}
 
                   {activeModal === 'about' && (
-                    <div className="space-y-4 sm:space-y-6">
-                      <p className="text-base sm:text-lg font-bold text-blue-600">Competitive Edge for Hackers.</p>
-                      <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Built for GDG events, providing multimodal AI mentorship, expert lead access, and project tracking.</p>
-                      <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl sm:rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
-                        <h5 className="font-black text-[9px] sm:text-[10px] uppercase tracking-widest mb-3 opacity-60">Tech Core</h5>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-xs font-bold opacity-80">
+                    <div className="space-y-6">
+                      <p className="text-lg font-bold text-blue-600">The GDG Assistant is your competitive edge.</p>
+                      <p className="text-slate-500 font-medium leading-relaxed">Built by GDG experts, this workspace provides multimodal AI mentorship, direct chapter lead connections, and official event tracking.</p>
+                      <div className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                        <h5 className="font-black text-[10px] uppercase tracking-widest mb-3 opacity-60">Architectural Core</h5>
+                        <ul className="grid grid-cols-2 gap-3 text-xs font-bold opacity-80">
                            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>Gemini 3 Flash</li>
-                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#EA4335]"></div>React 19</li>
-                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#34A853]"></div>Tailwind CSS</li>
-                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#FBBC05]"></div>ESM Modules</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#EA4335]"></div>Firebase Auth</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#34A853]"></div>React 19</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#FBBC05]"></div>Material Design</li>
                         </ul>
                       </div>
                     </div>
                   )}
                 </div>
-                <button onClick={() => setActiveModal(null)} className="mt-6 sm:mt-10 w-full py-4 sm:py-5 font-black rounded-2xl sm:rounded-3xl bg-slate-900 text-white uppercase tracking-widest text-[10px] sm:text-[11px] shadow-2xl hover:bg-black transition-all">Dismiss</button>
+                <button onClick={() => setActiveModal(null)} className="mt-10 w-full py-5 font-black rounded-3xl bg-slate-900 text-white uppercase tracking-widest text-[11px] shadow-2xl hover:bg-black transition-all">Return to Workspace</button>
               </div>
             </div>
           </div>
