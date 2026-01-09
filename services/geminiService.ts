@@ -16,65 +16,98 @@ Goal: learning, networking, and having fun!
 `;
 
 /**
- * Sends a text prompt to Gemini. 
- * Optimized with gemini-3-flash-preview for the best performance on mobile and tablet devices.
+ * Optimized text generation for mobile/tablet.
+ * Uses 'gemini-3-flash-preview' for the fastest response times.
  */
 export const askGemini = async (prompt: string): Promise<string> => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.error("Gemini API Error: process.env.API_KEY is missing.");
+    return "⚠️ Configuration Error: API key is not set. Please check your environment variables.";
+  }
+
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // Re-instantiate to ensure we use the latest injected environment state
+    const ai = new GoogleGenAI({ apiKey });
     
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.8,
-        topP: 0.95,
-        // Using a small thinking budget if necessary, but flash-preview is generally fast enough.
+        temperature: 0.7,
+        topP: 0.9,
+        // Disable thinking budget to achieve the lowest possible latency on mobile
+        thinkingConfig: { thinkingBudget: 0 },
       },
     });
 
-    return response.text || "I'm processing your brilliant idea... but I'm a bit speechless! Try rephrasing?";
+    // Access the text property directly per SDK guidelines
+    return response.text || "I processed the request, but didn't get a text response back. Let's try again! 🚀";
   } catch (error: any) {
     console.error("Gemini API Error:", error);
-    // Graceful error handling for mobile users who might face connectivity or quota issues
-    if (String(error).includes("429")) {
-      return "⚠️ The hackathon is busy! Let's take a 60-second breather before we dive back in.";
+    
+    const errorMsg = String(error);
+    
+    // Mobile-centric error handling
+    if (errorMsg.includes("429")) {
+      return "⚠️ The mentor is handling many requests right now! Let's pause for a few seconds and try again.";
     }
-    return "⚠️ I had a momentary glitch. Please ensure your environment is correctly configured!";
+    
+    if (errorMsg.includes("fetch failed") || errorMsg.includes("NetworkError")) {
+      return "⚠️ Connectivity issue detected. Please check your internet connection or switch to a more stable network.";
+    }
+
+    if (errorMsg.includes("safety")) {
+      return "⚠️ I can't provide a response for that specific query due to safety guidelines. Let's pivot to a different topic! 😊";
+    }
+
+    return "⚠️ Something went wrong on my end. Please try re-sending your message.";
   }
 };
 
 /**
- * Analyzes video frames using Gemini's multimodal capabilities.
+ * Optimized multimodal analysis for mobile.
+ * Sends compressed frames to the 'gemini-3-flash-preview' model.
  */
 export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): Promise<string> => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) return "⚠️ Vision service key missing.";
+
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey });
     
-    // Convert base64 frames to the parts format required by the SDK
-    const parts: any[] = frames.map(base64 => ({
+    // Map base64 strings to correct parts format
+    const imageParts = frames.map(base64 => ({
       inlineData: {
         data: base64.split(',')[1],
         mimeType: 'image/jpeg',
       },
     }));
 
-    // Add the text prompt to the multimodal request
-    parts.push({ text: prompt });
-
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: { parts },
+      contents: { 
+        parts: [
+          ...imageParts, 
+          { text: prompt || "Analyze these video frames and provide technical feedback for a hackathon project." }
+        ] 
+      },
       config: {
-        systemInstruction: SYSTEM_INSTRUCTION + "\n\nYou are now acting as a Video Analysis Mentor. Use the visual cues from the provided frames to give insightful advice.",
+        systemInstruction: SYSTEM_INSTRUCTION + "\n\nAs a Vision Mentor, analyze the visual progress shown in these frames. Look for UI patterns, logic flows, or hardware setups.",
         temperature: 0.4,
+        thinkingConfig: { thinkingBudget: 0 },
       },
     });
 
-    return response.text || "I saw the video, but I'm struggling to find the words to describe it.";
+    return response.text || "I've analyzed the frames but I'm having trouble describing the result. Try a different clip? 🎥";
   } catch (error: any) {
-    console.error("Gemini Multimodal Error:", error);
-    return "⚠️ Vision processing encountered an error. Please check your configuration and try again.";
+    console.error("Gemini Multimodal Analysis Error:", error);
+    
+    if (String(error).includes("413") || String(error).includes("payload too large")) {
+      return "⚠️ The video data is too large for your current mobile bandwidth. Try a shorter segment.";
+    }
+
+    return "⚠️ Vision processing failed. Let's try a simpler text query instead!";
   }
 };
