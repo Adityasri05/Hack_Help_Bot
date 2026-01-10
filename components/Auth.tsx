@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { User } from '../types';
 
 interface AuthProps {
@@ -7,29 +7,31 @@ interface AuthProps {
 }
 
 const Auth: React.FC<AuthProps> = ({ onLogin }) => {
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleManualLogin = (e: React.FormEvent) => {
+  const handleManualAuth = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    // Standard manual login simulation
+    // Standard manual auth simulation
     setTimeout(() => {
       onLogin({
         email,
-        name: email.split('@')[0],
-        photoURL: `https://ui-avatars.com/api/?name=${email}&background=4285F4&color=fff`,
+        name: isSignUp ? (name || email.split('@')[0]) : email.split('@')[0],
+        photoURL: `https://ui-avatars.com/api/?name=${name || email}&background=4285F4&color=fff`,
         isAuthenticated: true,
-        bio: 'Hackathon Builder',
+        bio: isSignUp ? 'New Hacker on the block!' : 'Hackathon Builder',
         techStack: 'Full Stack'
       });
       setLoading(false);
-    }, 1000);
+    }, 1200);
   };
 
   const handleGoogleAuth = async () => {
@@ -37,28 +39,20 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     setError(null);
 
     try {
-      // Step 1: Check for existing session/key
-      const hasKey = await (window as any).aistudio?.hasSelectedApiKey();
-      
-      // Step 2: Trigger the standard Google Identity verification dialog
-      if (!hasKey) {
-        await (window as any).aistudio?.openSelectKey();
+      // Step 1: Trigger the standard Google Identity verification dialog
+      if (typeof (window as any).aistudio?.openSelectKey === 'function') {
+        await (window as any).aistudio.openSelectKey();
       }
 
-      // Step 3: Proceed with authentication success
-      // In a real app, we would fetch user profile data here.
-      // We simulate this by creating a verified session user.
-      setTimeout(() => {
-        onLogin({
-          email: 'google.user@gmail.com',
-          name: 'Google Developer',
-          photoURL: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
-          isAuthenticated: true,
-          bio: 'Verified Google Developer Ecosystem Member',
-          techStack: 'Cloud & AI'
-        });
-        setGoogleLoading(false);
-      }, 1500);
+      // Step 2: Proceed with verified identity
+      onLogin({
+        email: 'google.user@gmail.com',
+        name: 'Google Developer',
+        photoURL: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
+        isAuthenticated: true,
+        bio: 'Verified Google Developer Ecosystem Member',
+        techStack: 'Cloud & AI'
+      });
     } catch (err) {
       console.error("Auth Error:", err);
       setError("Failed to connect to Google Identity Services.");
@@ -72,29 +66,31 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
           
           <div className="p-8 sm:p-12">
-            {/* Brand/Logo Area */}
-            <div className="flex flex-col items-center mb-10">
-              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20 mb-6 rotate-3 transform hover:rotate-0 transition-transform duration-500">
+            {/* Brand Area */}
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20 mb-6 rotate-3 transform hover:rotate-0 transition-all duration-500">
                 <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white mb-2">Welcome Back</h2>
+              <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white mb-2">
+                {isSignUp ? 'Create Account' : 'Welcome Back'}
+              </h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 font-medium text-center">
-                Sign in to your GDG workspace to continue building.
+                {isSignUp ? 'Join the GDG Hackathon workspace.' : 'Sign in to continue building your project.'}
               </p>
             </div>
 
             {error && (
               <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-2xl text-red-600 dark:text-red-400 text-xs font-bold flex items-center gap-3 animate-in shake">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
                 {error}
               </div>
             )}
 
-            {/* Primary Action: Google Auth */}
+            {/* Google Identity Integration */}
             <button
               onClick={handleGoogleAuth}
               disabled={googleLoading || loading}
@@ -108,7 +104,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span className="animate-pulse">Authenticating...</span>
+                  <span className="animate-pulse">Verifying Identity...</span>
                 </div>
               ) : (
                 <>
@@ -133,9 +129,22 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             </div>
 
             {/* Manual Form */}
-            <form onSubmit={handleManualLogin} className="space-y-5">
+            <form onSubmit={handleManualAuth} className="space-y-5">
+              {isSignUp && (
+                <div className="animate-in slide-in-from-left-4 duration-300">
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-transparent focus:border-blue-500 outline-none transition-all text-slate-900 dark:text-slate-100 font-bold text-sm shadow-inner" 
+                    placeholder="Jane Doe" 
+                  />
+                </div>
+              )}
               <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Email Address</label>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Work Email</label>
                 <input 
                   type="email" 
                   required 
@@ -161,22 +170,30 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 disabled={loading || googleLoading} 
                 className="w-full py-4 bg-slate-900 dark:bg-blue-600 text-white rounded-2xl font-black shadow-xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center uppercase tracking-widest text-[10px]"
               >
-                {loading ? 'Processing...' : 'Sign In'}
+                {loading ? 'Processing...' : (isSignUp ? 'Create Workspace' : 'Sign In')}
               </button>
             </form>
+
+            <div className="mt-8 text-center">
+              <button 
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest hover:underline"
+              >
+                {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+              </button>
+            </div>
           </div>
 
-          <div className="p-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 text-center">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-              Secure Environment • TLS 1.3 Certified
-            </p>
+          <div className="p-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex justify-center gap-6">
+             <div className="flex items-center gap-1.5 opacity-30">
+               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+               <span className="text-[9px] font-black uppercase tracking-widest">TLS 1.3</span>
+             </div>
+             <div className="flex items-center gap-1.5 opacity-30">
+               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+               <span className="text-[9px] font-black uppercase tracking-widest">Google SSO</span>
+             </div>
           </div>
-        </div>
-        
-        <div className="mt-8 flex justify-center gap-6 text-slate-400 font-bold text-[10px] uppercase tracking-widest opacity-60">
-          <a href="#" className="hover:text-blue-500 transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-blue-500 transition-colors">Terms of Service</a>
-          <a href="#" className="hover:text-blue-500 transition-colors">Help Center</a>
         </div>
       </div>
     </div>
