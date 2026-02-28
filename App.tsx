@@ -45,7 +45,7 @@ const App: React.FC = () => {
 
   // Preferences State
   const [isSpeechEnabled, setIsSpeechEnabled] = useState(() => localStorage.getItem('gdg_speech_enabled') === 'true');
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(() => localStorage.getItem('gdg_notifications_enabled') !== 'false');
   const [compactMode, setCompactMode] = useState(false);
 
   // Chat State
@@ -168,6 +168,10 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('gdg_speech_enabled', String(isSpeechEnabled));
   }, [isSpeechEnabled]);
+
+  useEffect(() => {
+    localStorage.setItem('gdg_notifications_enabled', String(notificationsEnabled));
+  }, [notificationsEnabled]);
 
   useEffect(() => {
     if (isAppLoaded && currentView === 'chat') {
@@ -1289,6 +1293,42 @@ const App: React.FC = () => {
                   {activeModal === 'settings' && (
                     <div className="space-y-4 sm:space-y-6">
                       <div className="grid grid-cols-1 gap-3 sm:gap-4">
+
+                        <button onClick={() => setDarkMode(!darkMode)} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                          <div className="flex items-center gap-3 sm:gap-4">
+                            <div className={`p-2 rounded-lg ${darkMode ? 'bg-indigo-900 border-indigo-700 text-indigo-400' : 'bg-white border text-indigo-500'}`}>
+                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                            </div>
+                            <span className="font-bold text-sm sm:text-base">Dark Mode</span>
+                          </div>
+                          <div className={`w-10 sm:w-14 h-5 sm:h-7 rounded-full relative transition-all ${darkMode ? 'bg-blue-600' : 'bg-slate-300'}`}>
+                            <div className={`absolute top-0.5 sm:top-1 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full shadow-sm transition-all ${darkMode ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}></div>
+                          </div>
+                        </button>
+
+                        <button onClick={() => setNotificationsEnabled(!notificationsEnabled)} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                          <div className="flex items-center gap-3 sm:gap-4">
+                            <div className={`p-2 rounded-lg ${notificationsEnabled ? 'bg-green-100 text-green-600' : 'bg-white border text-slate-400'}`}>
+                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                            </div>
+                            <span className="font-bold text-sm sm:text-base">Push Notifications</span>
+                          </div>
+                          <div className={`w-10 sm:w-14 h-5 sm:h-7 rounded-full relative transition-all ${notificationsEnabled ? 'bg-blue-600' : 'bg-slate-300'}`}>
+                            <div className={`absolute top-0.5 sm:top-1 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full shadow-sm transition-all ${notificationsEnabled ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}></div>
+                          </div>
+                        </button>
+
+                        <button onClick={() => setIsSpeechEnabled(!isSpeechEnabled)} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                          <div className="flex items-center gap-3 sm:gap-4">
+                            <div className={`p-2 rounded-lg ${isSpeechEnabled ? 'bg-blue-100 text-blue-600' : 'bg-white border text-slate-400'}`}>
+                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                            </div>
+                            <span className="font-bold text-sm sm:text-base">Auto-read Messages</span>
+                          </div>
+                          <div className={`w-10 sm:w-14 h-5 sm:h-7 rounded-full relative transition-all ${isSpeechEnabled ? 'bg-blue-600' : 'bg-slate-300'}`}>
+                            <div className={`absolute top-0.5 sm:top-1 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full shadow-sm transition-all ${isSpeechEnabled ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}></div>
+                          </div>
+                        </button>
 
                         <button onClick={() => setBgType(bgType === 'grid' ? 'dots' : bgType === 'dots' ? 'plain' : 'grid')} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
                           <div className="flex items-center gap-3 sm:gap-4">
