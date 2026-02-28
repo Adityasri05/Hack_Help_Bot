@@ -539,22 +539,32 @@ const App: React.FC = () => {
             </div>
 
             {/* ===== FOOTER CTA ===== */}
-            <div className={`relative p-8 sm:p-12 md:p-16 rounded-xl border overflow-hidden text-center ${darkMode ? 'bg-gradient-to-br from-[#111] to-[#0a0a2e] border-gray-800' : 'bg-gradient-to-br from-[#4285F4] to-[#667eea] border-transparent'}`}>
-              <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto space-y-6">
-                <span className={`inline-block px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-widest ${darkMode ? 'bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/30' : 'bg-white/20 text-white border border-white/30'}`}>
-                  Join The Movement
-                </span>
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] text-white">
-                  Shape the future of tech with <span className={`${darkMode ? 'text-[#4285F4]' : ''}`}>GDG SRMCEM.</span>
-                </h3>
-                <p className={`text-sm sm:text-base font-medium max-w-lg ${darkMode ? 'text-gray-400' : 'text-white/80'}`}>
-                  Don't just write code—build communities, learn from industry experts, and launch your career.
-                </p>
-                <a href="mailto:gdg.srmcem@gmail.com" className={`inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold rounded-lg border-2 transition-all hover:-translate-y-0.5 ${darkMode ? 'border-gray-600 text-gray-300 hover:text-white hover:border-[#4285F4]' : 'border-white/50 text-white hover:bg-white hover:text-[#4285F4]'}`}>
-                  Contact Us
-                </a>
+            <div className={`relative p-8 sm:p-12 md:p-16 rounded-xl border overflow-hidden ${darkMode ? 'bg-gradient-to-br from-[#111] to-[#0a0a2e] border-gray-800' : 'bg-gradient-to-br from-[#4285F4] to-[#667eea] border-transparent'}`}>
+
+              <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16 w-full max-w-5xl mx-auto">
+                {/* Logo on left */}
+                <div className="flex-shrink-0 bg-white p-4 rounded-[2rem] shadow-xl flex items-center justify-center transition-transform hover:scale-105 duration-300">
+                  <img src="/srmcem_logo.png" alt="SRMCEM Logo" className="w-28 sm:w-36 md:w-48 h-auto object-contain drop-shadow-sm" />
+                </div>
+
+                {/* Text on right */}
+                <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6 flex-1">
+                  <span className={`inline-block px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-widest ${darkMode ? 'bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/30' : 'bg-white/20 text-white border border-white/30'}`}>
+                    Join The Movement
+                  </span>
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] text-white">
+                    Shape the future of tech with <span className={`${darkMode ? 'text-[#4285F4]' : ''}`}>GDG SRMCEM.</span>
+                  </h3>
+                  <p className={`text-sm sm:text-base font-medium max-w-lg ${darkMode ? 'text-gray-400' : 'text-white/80'}`}>
+                    Don't just write code—build communities, learn from industry experts, and launch your career.
+                  </p>
+                  <a href="mailto:gdg.srmcem@gmail.com" className={`inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold rounded-lg border-2 transition-all hover:-translate-y-0.5 ${darkMode ? 'border-gray-600 text-gray-300 hover:text-white hover:border-[#4285F4]' : 'border-white/50 text-white hover:bg-white hover:text-[#4285F4]'}`}>
+                    Contact Us
+                  </a>
+                </div>
               </div>
-              <div className={`mt-10 pt-6 border-t flex flex-wrap justify-center gap-6 ${darkMode ? 'border-gray-800' : 'border-white/20'}`}>
+
+              <div className={`mt-10 pt-6 border-t flex flex-wrap justify-center gap-6 relative z-10 ${darkMode ? 'border-gray-800' : 'border-white/20'}`}>
                 {[
                   { name: 'Discord', url: 'https://discord.gg/qHvqUePnY' },
                   { name: 'Instagram', url: 'https://www.instagram.com/gdg_on_campus_srmcem?igsh=MXAxNXUwZWhnaHluNg==' },
@@ -563,7 +573,7 @@ const App: React.FC = () => {
                   <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className={`text-xs font-bold uppercase tracking-widest transition-colors ${darkMode ? 'text-gray-500 hover:text-[#4285F4]' : 'text-white/60 hover:text-white'}`}>{social.name}</a>
                 ))}
               </div>
-              <p className={`text-[9px] font-bold uppercase tracking-widest opacity-50 mt-8 ${darkMode ? 'text-gray-600' : 'text-white'}`}>Made with ❤️ by GDG on Campus SRMCEM</p>
+              <p className={`text-[9px] font-bold uppercase tracking-widest opacity-50 mt-8 text-center relative z-10 w-full block ${darkMode ? 'text-gray-600' : 'text-white'}`}>Made with ❤️ by GDG on Campus SRMCEM</p>
             </div>
           </div>
         </div>
@@ -619,14 +629,13 @@ const App: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               {[
-                { name: "Priyam Srivastava", role: "Organizer (Lead)", email: "gdg.srmcem@gmail.com", color: "from-blue-500 to-blue-600" },
-                { name: "Navleen Kaur", role: "Co-Organizer", email: "gdg.srmcem@gmail.com", color: "from-red-500 to-red-600" },
-                { name: "Lav Kumar Shakya", role: "Technical Head", email: "gdg.srmcem@gmail.com", color: "from-green-500 to-green-600" },
-                { name: "Udit Maurya", role: "Social Media Head", email: "gdg.srmcem@gmail.com", color: "from-yellow-500 to-yellow-600" },
-                { name: "Bhanu Pratap Singh", role: "Marketing Head", email: "gdg.srmcem@gmail.com", color: "from-indigo-500 to-indigo-600" },
-                { name: "Ayush Pandey", role: "Creative Head", email: "gdg.srmcem@gmail.com", color: "from-cyan-500 to-cyan-600" },
-                { name: "Kirti", role: "Event and PR Head", email: "gdg.srmcem@gmail.com", color: "from-orange-500 to-orange-600" },
-                { name: "Ananay Verma", role: "Social Media Co-Head", email: "gdg.srmcem@gmail.com", color: "from-purple-500 to-purple-600" }
+                { name: "Priyam Srivastava", role: "Organizer (Lead)", linkedin: "https://www.linkedin.com/in/itspriyamsri/", color: "from-blue-500 to-blue-600" },
+                { name: "Navleen Kaur", role: "Co-Organizer", linkedin: "https://www.linkedin.com/in/navleen-kaur-782257294/", color: "from-red-500 to-red-600" },
+                { name: "Lav Kumar Shakya", role: "Technical Head", linkedin: "https://www.linkedin.com/in/lavkumarshakya/", color: "from-green-500 to-green-600" },
+                { name: "Bhanu Pratap Singh", role: "Marketing Head", linkedin: "https://www.linkedin.com/in/bylerma/", color: "from-indigo-500 to-indigo-600" },
+                { name: "Ayush Pandey", role: "Creative Head", linkedin: "https://www.linkedin.com/in/ayush-pandey-66b254294/", color: "from-cyan-500 to-cyan-600" },
+                { name: "Kirti", role: "Event and PR Head", linkedin: "https://www.linkedin.com/in/kirti-5b7231325/", color: "from-orange-500 to-orange-600" },
+                { name: "Ananay Verma", role: "Social Media Head", linkedin: "https://www.linkedin.com/in/ananay-verma-268843326/", color: "from-purple-500 to-purple-600" }
               ].map((lead, i) => (
                 <div key={i} className={`group p-6 rounded-xl border flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
                   <div className="flex items-center gap-4 sm:gap-5">
@@ -638,12 +647,13 @@ const App: React.FC = () => {
                       <p className="text-[10px] font-bold text-[#4285F4] uppercase tracking-wider">{lead.role}</p>
                     </div>
                   </div>
-                  <div className={`p-3 rounded-lg border flex items-center gap-2 ${darkMode ? 'bg-black/30 border-gray-800' : 'bg-gray-50 border-gray-200'}`}>
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" /></svg>
-                    <span className={`text-[10px] sm:text-sm font-mono font-medium truncate select-all ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                      {lead.email}
+                  <a href={lead.linkedin} target="_blank" rel="noopener noreferrer" className={`p-3 rounded-lg border flex items-center gap-2 transition-colors ${darkMode ? 'bg-black/30 border-gray-800 hover:border-blue-500/50 hover:bg-blue-500/5' : 'bg-gray-50 border-gray-200 hover:border-blue-400 hover:bg-blue-50'}`}>
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#0A66C2] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                    <span className={`text-[10px] sm:text-sm font-medium truncate ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                      LinkedIn Profile
                     </span>
-                  </div>
+                    <svg className="w-3 h-3 ml-auto text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
                 </div>
               ))}
             </div>
