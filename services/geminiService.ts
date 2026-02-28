@@ -1,7 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Hardcoded API key for GDG on Campus SRMCEM chatbot
-const GEMINI_API_KEY = "AIzaSyDjOcT5KRUaU7uwB4b4Kkc-DfrYZOoF7kQ";
+// API key loaded from environment variable (set in .env file, injected by Vite)
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
+
+if (!GEMINI_API_KEY) {
+  console.error("GEMINI_API_KEY is not set. Please create a .env file with GEMINI_API_KEY=your_key");
+}
 
 const SYSTEM_INSTRUCTION = `
 You are the official AI Assistant for **GDG on Campus SRMCEM** (Google Developer Group on Campus - Shri Ramswaroop Memorial College of Engineering and Management, Lucknow, India).
@@ -88,8 +92,8 @@ Remember: "At GDG on Campus SRMCEM, we turn ideas into reality - no matter your 
 `;
 
 /**
- * Optimized text generation using Gemini 2.5 Flash Lite.
- * Fastest model for quick, conversational responses.
+ * Text generation using Gemini 2.0 Flash.
+ * Fast and reliable model for conversational responses.
  */
 export const askGemini = async (prompt: string): Promise<string> => {
   try {
@@ -128,7 +132,7 @@ export const askGemini = async (prompt: string): Promise<string> => {
 };
 
 /**
- * Optimized multimodal analysis using Gemini 2.5 Flash Lite.
+ * Multimodal analysis using Gemini 2.0 Flash.
  * Analyzes video frames for hackathon project feedback.
  */
 export const analyzeVideoWithGemini = async (prompt: string, frames: string[]): Promise<string> => {
