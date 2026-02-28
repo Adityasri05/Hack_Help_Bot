@@ -19,7 +19,7 @@ export interface Message {
 
 export type Domain = 'AI/ML' | 'Web Dev' | 'Android';
 
-export type AppView = 'dashboard' | 'chat' | 'leads' | 'events' | 'resources';
+export type AppView = 'dashboard' | 'chat' | 'leads' | 'events' | 'resources' | 'about';
 
 export interface FAQItem {
   question: string;

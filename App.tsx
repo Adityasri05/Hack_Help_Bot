@@ -37,10 +37,7 @@ const App: React.FC = () => {
     setIsHeaderHidden(false);
   }, [currentView]);
 
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    const saved = localStorage.getItem('gdg_assistant_dark_mode');
-    return saved === 'true';
-  });
+  const [darkMode, setDarkMode] = useState<boolean>(true);
 
   const [bgType, setBgType] = useState<string>(() => {
     return localStorage.getItem('gdg_assistant_bg') || 'grid';
@@ -119,7 +116,7 @@ const App: React.FC = () => {
   const setWelcomeMessage = () => {
     setMessages([{
       id: '1',
-      text: "👋 Hey there! I'm the GDG SRMCEM AI Assistant. Ask me anything about our community, events, or tech questions! 🚀",
+      text: "ðŸ‘‹ Hey there! I'm the GDG SRMCEM AI Assistant. Ask me anything about our community, events, or tech questions! ðŸš€",
       sender: 'bot',
       timestamp: new Date(),
     }]);
@@ -317,7 +314,7 @@ const App: React.FC = () => {
       const domain = prompt.replace('/idea', '').trim();
       const matchedKey = Object.keys(IDEAS).find(k => k.toLowerCase() === domain.toLowerCase());
       if (matchedKey) {
-        botReply = `💡 ${matchedKey} Idea:\n\n${IDEAS[matchedKey][Math.floor(Math.random() * IDEAS[matchedKey].length)]}`;
+        botReply = `ðŸ’¡ ${matchedKey} Idea:\n\n${IDEAS[matchedKey][Math.floor(Math.random() * IDEAS[matchedKey].length)]}`;
       } else {
         botReply = `Available domains: AI/ML, Web Dev, Android. Try: /idea AI/ML`;
       }
@@ -427,18 +424,12 @@ const App: React.FC = () => {
         {/* ===== HERO SECTION ===== */}
         <div className="relative w-full h-[60vh] min-h-[400px] flex flex-col items-center justify-center overflow-hidden">
 
-          {/* Floating Animated Blobs (Confined to Hero) */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-            <div className={`absolute top-10 left-10 w-64 h-64 ${darkMode ? 'bg-blue-600/20' : 'bg-blue-400/20'} rounded-full mix-blend-multiply filter blur-3xl animate-blob`}></div>
-            <div className={`absolute top-30 right-10 w-72 h-72 ${darkMode ? 'bg-purple-600/20' : 'bg-purple-400/20'} rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000`}></div>
-          </div>
+          {/* Gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 z-0"></div>
 
-          <div className="relative z-10 text-center space-y-4 sm:space-y-6 px-4 drop-shadow-lg animate-in fade-in slide-in-from-bottom-8 duration-700 w-full max-w-4xl mx-auto mt-8 sm:mt-12">
-            <h2 className={`text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] ${darkMode ? 'text-white' : 'text-slate-900'} relative`}>
-              {/* Decorative text glowing background */}
-              <div className="absolute -inset-4 bg-white/30 dark:bg-slate-900/40 blur-3xl rounded-[3rem] -z-10 hidden sm:block pointer-events-none"></div>
-
-              <span className="inline-block hover:scale-105 transition-transform duration-300 drop-shadow-md">
+          <div className="relative z-10 text-center space-y-5 sm:space-y-6 px-4 w-full max-w-4xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-white drop-shadow-lg">
+              <span className="inline-block">
                 <span className="text-[#4285F4]">G</span>
                 <span className="text-[#EA4335]">o</span>
                 <span className="text-[#FBBC05]">o</span>
@@ -447,36 +438,35 @@ const App: React.FC = () => {
                 <span className="text-[#EA4335]">e</span>
               </span>
               {" Developer"} <br className="hidden sm:block" /> {"Groups"}
-              <span className="block text-xl sm:text-2xl md:text-3xl mt-2 sm:mt-3 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent drop-shadow-sm relative group">
+              <span className="block text-xl sm:text-2xl md:text-3xl mt-3 text-[#4285F4] font-bold">
                 on Campus SRMCEM
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 max-w-md h-1.5 bg-gradient-to-r from-blue-600 to-purple-600 opacity-50 blur-sm group-hover:opacity-100 group-hover:blur-md transition-all duration-500"></span>
               </span>
             </h2>
-            <p className={`text-sm sm:text-base font-medium max-w-2xl mx-auto px-4 leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700 font-semibold'}`}>
-              {getGreeting()}, <span className="text-blue-700 dark:text-blue-400 font-black">{user.name}</span>! Welcome to your all-in-one workspace for hackathon prep, AI-powered assistance, community resources, and Google technologies.
+            <p className="text-sm sm:text-base font-medium max-w-2xl mx-auto px-4 leading-relaxed text-gray-200">
+              {getGreeting()}, <span className="text-[#4285F4] font-bold">{user.name}</span>! Welcome to your all-in-one workspace for hackathon prep, AI-powered assistance, community resources, and Google technologies.
             </p>
+
           </div>
         </div>
 
-        {/* ===== MAIN DASHBOARD CONTENT (No Background Image) ===== */}
-        <div className={`p-4 sm:p-8 md:p-12 relative z-10 w-full overflow-hidden backdrop-blur-2xl ${darkMode ? 'bg-slate-950/60' : 'bg-white/50'}`}>
-          <div className="max-w-7xl mx-auto space-y-10 sm:space-y-16 mt-4">
+        {/* ===== MAIN DASHBOARD CONTENT ===== */}
+        <div className={`p-4 sm:p-8 md:p-12 relative z-10 w-full overflow-hidden ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`}>
+          <div className="max-w-7xl mx-auto space-y-10 sm:space-y-14 mt-4">
 
             {/* ===== ABOUT GDG SECTION ===== */}
-            <div className={`p-6 sm:p-10 rounded-[2rem] sm:rounded-[3rem] border relative overflow-hidden backdrop-blur-xl animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 fill-mode-both hover:shadow-blue-500/10 transition-shadow duration-500 ${darkMode ? 'bg-slate-800/50 border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)]' : 'bg-white/70 border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.08)]'}`}>
-              <div className="absolute top-[-50%] right-[-10%] w-64 h-64 bg-gradient-to-br from-blue-500 to-indigo-500 opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-700"></div>
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 items-start relative z-10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-lg shadow-blue-500/30 flex-shrink-0 border border-white/20 transform hover:rotate-6 transition-transform duration-500">
-                  <span className="text-3xl sm:text-4xl drop-shadow-md">🎓</span>
+            <div className={`p-6 sm:p-10 rounded-xl border transition-all duration-300 ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#4285F4] rounded-xl flex items-center justify-center shadow-lg shadow-[#4285F4]/20 flex-shrink-0">
+                  <span className="text-2xl sm:text-3xl">🎓</span>
                 </div>
-                <div className="space-y-3 sm:space-y-4 flex-1">
-                  <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>What is GDG on Campus?</h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                    <strong className="text-blue-600 dark:text-blue-400">Google Developer Groups on Campus (GDG)</strong> are university-based communities backed by Google Developers. We bring students together to learn, build, and grow with Google technologies — from Cloud and AI/ML to Android and Web. Whether you're a first-year beginner or a seasoned coder, GDG SRMCEM is your launchpad for real-world skills and industry connections.
+                <div className="space-y-3 flex-1">
+                  <h3 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>What is <span className="text-[#4285F4]">GDG on Campus</span>?</h3>
+                  <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                    <strong className="text-[#4285F4]">Google Developer Groups on Campus (GDG)</strong> are university-based communities backed by Google Developers. We bring students together to learn, build, and grow with Google technologies — from Cloud and AI/ML to Android and Web. Whether you're a first-year beginner or a seasoned coder, GDG SRMCEM is your launchpad for real-world skills and industry connections.
                   </p>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {['Open Source', 'Workshops', 'Hackathons', 'Study Jams', 'Tech Talks', 'Networking'].map((tag) => (
-                      <span key={tag} className={`px-3 py-1.5 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-md cursor-default ${darkMode ? 'bg-slate-800/80 border-slate-600/50 text-slate-300 hover:border-blue-500/50' : 'bg-white border-white text-slate-600 hover:border-blue-200 hover:text-blue-600'}`}>{tag}</span>
+                      <span key={tag} className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${darkMode ? 'bg-gray-800 text-gray-400 border border-gray-700' : 'bg-gray-100 text-gray-600 border border-gray-200'}`}>{tag}</span>
                     ))}
                   </div>
                 </div>
@@ -484,72 +474,33 @@ const App: React.FC = () => {
             </div>
 
             {/* ===== NAVIGATION CARDS ===== */}
-            <div className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-1000 fill-mode-both">
-              <div className="px-2">
-                <h3 className={`text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                  Explore Tools
-                  <span className="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-400 align-middle">Beta</span>
+            <div className="space-y-5">
+              <div className="px-1">
+                <h3 className={`text-xl sm:text-2xl font-extrabold tracking-tight flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Explore <span className="text-[#4285F4]">Tools</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#4285F4]/10 text-[#4285F4]">Beta</span>
                 </h3>
-                <p className={`text-xs sm:text-sm font-medium mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>Everything you need to crush your next hackathon.</p>
+                <p className={`text-sm mt-1 text-gray-500`}>Everything you need to crush your next hackathon.</p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 px-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {[
-                  {
-                    view: 'chat', title: 'AI Assistant', badge: 'Gemini 2.0',
-                    desc: 'Get technical advice, debug code, brainstorm architecture, and analyze videos with Gemini-powered AI.',
-                    icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z",
-                    gradient: 'from-blue-600 to-indigo-700', shadowLine: 'group-hover:shadow-[0_0_30px_-5px_var(--tw-shadow-color)] shadow-blue-500'
-                  },
-                  {
-                    view: 'leads', title: 'GDG Leads', badge: '8 Members',
-                    desc: 'Meet the organizing team. Reach out for mentorship, guidance, and collaboration opportunities.',
-                    icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
-                    gradient: 'from-red-500 to-rose-600', shadowLine: 'group-hover:shadow-[0_0_30px_-5px_var(--tw-shadow-color)] shadow-red-500'
-                  },
-                  {
-                    view: 'events', title: 'Event Timeline', badge: 'Live',
-                    desc: 'Browse upcoming DevFests, Hack-A-Thons, WTM Summits, and workshops with live status updates.',
-                    icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z",
-                    gradient: 'from-yellow-500 to-amber-600', shadowLine: 'group-hover:shadow-[0_0_30px_-5px_var(--tw-shadow-color)] shadow-yellow-500'
-                  },
-                  {
-                    view: 'certification', title: 'Certification Zone', badge: 'External', externalUrl: 'https://gdg-certify.vercel.app/',
-                    desc: 'Earn official Google credentials and validate your skills with our certification platform.',
-                    icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z",
-                    gradient: 'from-green-500 to-emerald-600', shadowLine: 'group-hover:shadow-[0_0_30px_-5px_var(--tw-shadow-color)] shadow-green-500'
-                  }
-                ].map((item, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      if (item.externalUrl) {
-                        window.open(item.externalUrl, '_blank');
-                      } else {
-                        setCurrentView(item.view as AppView);
-                      }
-                    }}
-                    className={`group relative p-6 sm:p-8 lg:p-10 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] border text-left transition-all duration-500 hover:-translate-y-2 active:translate-y-0 active:scale-[0.98] overflow-hidden backdrop-blur-xl hover:border-transparent ${darkMode ? 'bg-slate-800/50 border-slate-700/50 shadow-lg hover:bg-slate-800/80' : 'bg-white/70 border-white/80 shadow-xl hover:bg-white'} ${item.shadowLine}`}
-                  >
-                    <div className={`absolute top-0 right-0 w-24 h-24 sm:w-40 sm:h-40 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-15 blur-3xl transition-opacity duration-500`}></div>
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 dark:group-hover:border-white/10 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] pointer-events-none transition-colors duration-500"></div>
-                    <div className="flex items-start justify-between mb-5 sm:mb-6">
-                      <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${item.gradient} rounded-2xl sm:rounded-3xl flex items-center justify-center text-white shadow-lg ${item.shadowLine.split(' ')[1].replace('shadow-', 'shadow-')}/40 group-hover:rotate-[8deg] group-hover:scale-110 transition-all duration-500 border border-white/20`}>
-                        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
+                  { view: 'chat', title: 'AI Assistant', badge: 'Gemini 2.0', desc: 'Get technical advice, debug code, brainstorm architecture, and analyze videos with Gemini-powered AI.', icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z", color: '#4285F4' },
+                  { view: 'leads', title: 'GDG Leads', badge: '8 Members', desc: 'Meet the organizing team. Reach out for mentorship, guidance, and collaboration.', icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z", color: '#EA4335' },
+                  { view: 'events', title: 'Event Timeline', badge: 'Live', desc: 'Browse upcoming DevFests, Hack-A-Thons, WTM Summits, and workshops.', icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z", color: '#FBBC05' },
+                  { view: 'certification', title: 'Certification Zone', badge: 'External', externalUrl: 'https://gdg-certify.vercel.app/', desc: 'Earn official Google credentials and validate your skills.', icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z", color: '#34A853' }
+                ].map((item: any, i) => (
+                  <button key={i} onClick={() => { if (item.externalUrl) { window.open(item.externalUrl, '_blank'); } else { setCurrentView(item.view as AppView); } }}
+                    className={`group relative p-6 sm:p-8 rounded-xl border text-left transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800 hover:border-gray-700' : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm'}`}>
+                    <div className="flex items-start justify-between mb-5">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md" style={{ backgroundColor: item.color }}>
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
                       </div>
-                      <span className={`px-2.5 py-1 rounded-full text-[7px] sm:text-[9px] font-black uppercase tracking-widest border backdrop-blur-md shadow-sm transition-colors ${darkMode ? 'bg-slate-800/80 border-slate-600/50 text-slate-300 group-hover:border-blue-500/50' : 'bg-white/90 border-white text-slate-600 group-hover:text-blue-600 group-hover:border-blue-200'}`}>{item.badge}</span>
+                      <span className={`px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider ${darkMode ? 'bg-gray-800 text-gray-400 border border-gray-700' : 'bg-gray-100 text-gray-500 border border-gray-200'}`}>{item.badge}</span>
                     </div>
-                    <h3 className={`text-xl sm:text-2xl font-black mb-2 sm:mb-3 relative z-10 transition-colors ${darkMode ? 'text-white group-hover:text-blue-200' : 'text-slate-900 group-hover:text-blue-700'}`}>{item.title}</h3>
-                    <p className={`text-xs sm:text-sm leading-relaxed font-medium relative z-10 transition-colors ${darkMode ? 'text-slate-300 group-hover:text-white' : 'text-slate-600 group-hover:text-slate-800'}`}>{item.desc}</p>
-
-                    {/* Hover Arrow Indicator */}
-                    <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md border ${darkMode ? 'bg-white/10 border-white/20 text-white' : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
-                        {item.externalUrl ? (
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                        ) : (
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M12 5l7 7-7 7" /></svg>
-                        )}
-                      </div>
+                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{item.title}</h3>
+                    <p className={`text-xs sm:text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{item.desc}</p>
+                    <div className="absolute bottom-5 right-5 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                      <svg className={`w-4 h-4 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M12 5l7 7-7 7" /></svg>
                     </div>
                   </button>
                 ))}
@@ -557,65 +508,52 @@ const App: React.FC = () => {
             </div>
 
             {/* ===== HACKATHON TIPS ===== */}
-            <div className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-[600ms] fill-mode-both">
-              <div className="px-2">
-                <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>💡 Hackathon Quick Tips</h3>
-                <p className={`text-xs sm:text-sm font-medium mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>Pro strategies from past winners and GDG mentors.</p>
+            <div className="space-y-5">
+              <div className="px-1">
+                <h3 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>💡 Hackathon <span className="text-[#4285F4]">Quick Tips</span></h3>
+                <p className="text-sm mt-1 text-gray-500">Pro strategies from past winners and GDG mentors.</p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 px-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
                 {[
-                  { title: "Start with the Problem", tip: "Judges care more about the problem you solve than the tech you use. Define a clear problem statement in the first 30 minutes.", icon: "🎯", color: "from-red-500 to-orange-500" },
-                  { title: "Build an MVP First", tip: "A working demo beats a polished mockup. Get core functionality running before adding bells and whistles.", icon: "🏗️", color: "from-blue-500 to-cyan-500" },
-                  { title: "Nail the Pitch", tip: "You have 3-5 minutes to impress. Lead with the problem, demo the solution, explain the impact. Practice twice.", icon: "🎤", color: "from-purple-500 to-pink-500" },
+                  { title: "Start with the Problem", tip: "Judges care more about the problem you solve than the tech you use. Define a clear problem statement in the first 30 minutes.", icon: "🎯" },
+                  { title: "Build an MVP First", tip: "A working demo beats a polished mockup. Get core functionality running before adding bells and whistles.", icon: "🏗️" },
+                  { title: "Nail the Pitch", tip: "You have 3-5 minutes to impress. Lead with the problem, demo the solution, explain the impact. Practice twice.", icon: "🎤" },
                 ].map((tip, i) => (
-                  <div key={i} className={`group p-6 sm:p-7 rounded-2xl sm:rounded-3xl border transition-all duration-500 hover:-translate-y-1 hover:scale-[1.03] backdrop-blur-xl ${darkMode ? 'bg-slate-800/50 border-slate-700/50 shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]' : 'bg-white/70 border-white/80 shadow-xl hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]'}`}>
-                    <div className="text-3xl sm:text-4xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500 inline-block drop-shadow-md origin-bottom-left">{tip.icon}</div>
-                    <h4 className={`font-black text-sm sm:text-base mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r ${tip.color} transition-all duration-300 ${darkMode ? 'text-white' : 'text-slate-900'}`}>{tip.title}</h4>
-                    <p className={`text-[10px] sm:text-xs leading-relaxed font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{tip.tip}</p>
+                  <div key={i} className={`p-6 rounded-xl border transition-all duration-300 hover:-translate-y-1 ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
+                    <div className="text-3xl mb-4">{tip.icon}</div>
+                    <h4 className={`font-bold text-sm mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{tip.title}</h4>
+                    <p className={`text-xs leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{tip.tip}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* ===== ENGAGING FOOTER CTA ===== */}
-            <div className={`relative mt-16 sm:mt-24 p-8 sm:p-12 md:p-16 rounded-[2rem] sm:rounded-[3rem] border overflow-hidden text-center animate-in fade-in duration-1000 delay-[800ms] fill-mode-both ${darkMode ? 'bg-indigo-950/40 border-indigo-500/30 shadow-[0_8px_30px_rgb(0,0,0,0.4)]' : 'bg-blue-50 border-blue-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.05)]'}`}>
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-transparent pointer-events-none"></div>
-
+            {/* ===== FOOTER CTA ===== */}
+            <div className={`relative p-8 sm:p-12 md:p-16 rounded-xl border overflow-hidden text-center ${darkMode ? 'bg-gradient-to-br from-[#111] to-[#0a0a2e] border-gray-800' : 'bg-gradient-to-br from-[#4285F4] to-[#667eea] border-transparent'}`}>
               <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto space-y-6">
-                <span className={`inline-block px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest border backdrop-blur-md ${darkMode ? 'bg-blue-900/30 text-blue-300 border-blue-700/50' : 'bg-white text-blue-700 border-blue-200 shadow-sm'}`}>
+                <span className={`inline-block px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-widest ${darkMode ? 'bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/30' : 'bg-white/20 text-white border border-white/30'}`}>
                   Join The Movement
                 </span>
-
-                <h3 className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                  Shape the future of tech with GDG SRMCEM.
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] text-white">
+                  Shape the future of tech with <span className={`${darkMode ? 'text-[#4285F4]' : ''}`}>GDG SRMCEM.</span>
                 </h3>
-
-                <p className={`text-sm sm:text-base md:text-lg font-medium max-w-lg ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                <p className={`text-sm sm:text-base font-medium max-w-lg ${darkMode ? 'text-gray-400' : 'text-white/80'}`}>
                   Don't just write code—build communities, learn from industry experts, and launch your career.
                 </p>
-
-                <div className="flex flex-wrap justify-center gap-4 pt-4">
-                  <a href="mailto:gdg.srmcem@gmail.com" className={`inline-flex items-center justify-center px-8 py-4 text-sm sm:text-base font-black uppercase tracking-widest rounded-2xl border-2 transition-all duration-300 hover:-translate-y-1 ${darkMode ? 'border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:text-blue-700 hover:border-blue-200 hover:bg-white'}`}>
-                    Contact Us
-                  </a>
-                </div>
+                <a href="mailto:gdg.srmcem@gmail.com" className={`inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold rounded-lg border-2 transition-all hover:-translate-y-0.5 ${darkMode ? 'border-gray-600 text-gray-300 hover:text-white hover:border-[#4285F4]' : 'border-white/50 text-white hover:bg-white hover:text-[#4285F4]'}`}>
+                  Contact Us
+                </a>
               </div>
-
-              {/* Smaller floating links at the bottom */}
-              <div className={`mt-12 sm:mt-16 pt-8 border-t flex flex-wrap justify-center gap-6 sm:gap-8 ${darkMode ? 'border-slate-800/60' : 'border-slate-200/60'}`}>
+              <div className={`mt-10 pt-6 border-t flex flex-wrap justify-center gap-6 ${darkMode ? 'border-gray-800' : 'border-white/20'}`}>
                 {[
                   { name: 'Discord', url: 'https://discord.gg/qHvqUePnY' },
                   { name: 'Instagram', url: 'https://www.instagram.com/gdg_on_campus_srmcem?igsh=MXAxNXUwZWhnaHluNg==' },
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/company/gdgoncampus-srmcem/' }
                 ].map((social) => (
-                  <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className={`text-xs sm:text-sm font-black uppercase tracking-widest transition-colors ${darkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-500 hover:text-blue-600'}`}>
-                    {social.name}
-                  </a>
+                  <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className={`text-xs font-bold uppercase tracking-widest transition-colors ${darkMode ? 'text-gray-500 hover:text-[#4285F4]' : 'text-white/60 hover:text-white'}`}>{social.name}</a>
                 ))}
               </div>
-              <p className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest opacity-60 mt-10 ${darkMode ? 'text-slate-600' : 'text-slate-400'}`}>
-                Made with ❤️ by GDG on Campus SRMCEM
-              </p>
+              <p className={`text-[9px] font-bold uppercase tracking-widest opacity-50 mt-8 ${darkMode ? 'text-gray-600' : 'text-white'}`}>Made with ❤️ by GDG on Campus SRMCEM</p>
             </div>
           </div>
         </div>
@@ -623,30 +561,29 @@ const App: React.FC = () => {
         {/* Global Action Button */}
         <button
           onClick={() => setActiveModal('about')}
-          className={`fixed bottom-6 right-6 sm:bottom-8 sm:right-8 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center backdrop-blur-lg transition-all duration-500 hover:scale-110 hover:-translate-y-2 active:scale-95 active:translate-y-0 z-50 group ${darkMode ? 'bg-slate-800/90 text-blue-400 border border-slate-700 shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:shadow-blue-500/30' : 'bg-white/95 text-blue-600 border border-white shadow-[0_10px_40px_rgba(0,0,0,0.15)] hover:shadow-blue-500/20'}`}
+          className={`fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 z-50 ${darkMode ? 'bg-[#111] text-[#4285F4] border border-gray-800 shadow-lg' : 'bg-white text-[#4285F4] border border-gray-200 shadow-lg'}`}
           title="About the App"
         >
-          <span className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping opacity-20 group-hover:opacity-40"></span>
-          <svg className="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-sm group-hover:rotate-[360deg] transition-transform duration-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         </button>
       </div>
     );
   };
 
   const LeadsView = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in-95 duration-500" onScroll={handleScroll}>
+    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`self-start p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
+          <button onClick={() => setCurrentView('dashboard')} className={`self-start p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
           <div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">GDG Leads</h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium">GDG on Campus SRMCEM Organizing Team (8 members).</p>
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>GDG <span className="text-[#4285F4]">Leads</span></h2>
+            <p className="text-sm text-gray-500">GDG on Campus SRMCEM Organizing Team (8 members).</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pb-12">
           {[
             { name: "Priyam Srivastava", role: "Organizer (Lead)", email: "gdg.srmcem@gmail.com", color: "from-blue-500 to-blue-600" },
             { name: "Navleen Kaur", role: "Co-Organizer", email: "gdg.srmcem@gmail.com", color: "from-red-500 to-red-600" },
@@ -657,18 +594,17 @@ const App: React.FC = () => {
             { name: "Kirti", role: "Event and PR Head", email: "gdg.srmcem@gmail.com", color: "from-orange-500 to-orange-600" },
             { name: "Ananay Verma", role: "Social Media Co-Head", email: "gdg.srmcem@gmail.com", color: "from-purple-500 to-purple-600" }
           ].map((lead, i) => (
-            <div key={i} className={`group p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border shadow-md flex flex-col gap-4 sm:gap-6 transition-all duration-300 hover:border-blue-500/30 ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'
-              }`}>
+            <div key={i} className={`group p-6 rounded-xl border flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
               <div className="flex items-center gap-4 sm:gap-5">
-                <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${lead.color} rounded-[1rem] sm:rounded-[1.25rem] flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-inner`}>
+                <div className={`w-12 h-12 bg-gradient-to-br ${lead.color} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md`}>
                   {lead.name[0]}
                 </div>
                 <div>
-                  <h4 className={`font-black text-lg sm:text-xl ${darkMode ? 'text-white' : 'text-slate-900'}`}>{lead.name}</h4>
-                  <p className="text-[10px] sm:text-sm font-bold text-blue-500 uppercase tracking-widest">{lead.role}</p>
+                  <h4 className={`font-bold text-base ${darkMode ? 'text-white' : 'text-gray-900'}`}>{lead.name}</h4>
+                  <p className="text-[10px] font-bold text-[#4285F4] uppercase tracking-wider">{lead.role}</p>
                 </div>
               </div>
-              <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border flex items-center gap-2 sm:gap-3 ${darkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50 border-slate-100'}`}>
+              <div className={`p-3 rounded-lg border flex items-center gap-2 ${darkMode ? 'bg-black/30 border-gray-800' : 'bg-gray-50 border-gray-200'}`}>
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" /></svg>
                 <span className={`text-[10px] sm:text-sm font-mono font-medium truncate select-all ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                   {lead.email}
@@ -682,13 +618,13 @@ const App: React.FC = () => {
   );
 
   const EventsView = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in-95 duration-500" onScroll={handleScroll}>
+    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
         <div className="flex items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
+          <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Timeline</h2>
+          <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Event <span className="text-[#4285F4]">Timeline</span></h2>
         </div>
         <div className="space-y-4 sm:space-y-6">
           {[
@@ -696,7 +632,7 @@ const App: React.FC = () => {
             { title: "Hack-A-Thon Sprint", date: "Nov 02, 2024", type: "Coding", status: "Coming Soon" },
             { title: "WTM Summit", date: "Dec 10, 2024", type: "Networking", status: "Registration Open" }
           ].map((event, i) => (
-            <div key={i} className={`p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 group transition-all duration-300 hover:scale-[1.01] ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'}`}>
+            <div key={i} className={`p-5 sm:p-6 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 group transition-all duration-300 hover:-translate-y-0.5 ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
               <div className="flex gap-4 sm:gap-6 items-center">
                 <div className={`w-12 h-12 sm:w-14 sm:h-14 bg-slate-100 dark:bg-slate-700 rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-500 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500`}>
                   <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" /></svg>
@@ -724,15 +660,15 @@ const App: React.FC = () => {
   );
 
   const ResourcesView = () => (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in-95 duration-500" onScroll={handleScroll}>
+    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
         <div className="flex items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-90`}>
+          <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
           <div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Dev Toolbox</h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium">Core Google technologies for builders.</p>
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Dev <span className="text-[#4285F4]">Toolbox</span></h2>
+            <p className="text-sm text-gray-500">Core Google technologies for builders.</p>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
@@ -744,7 +680,7 @@ const App: React.FC = () => {
             { name: "TensorFlow", category: "Machine Learning", desc: "The end-to-end open source platform for machine learning, from research to production.", color: 'bg-orange-500' },
             { name: "Material Design", category: "UI/UX", desc: "Google's open-source design system to help teams build high-quality digital experiences.", color: 'bg-red-500' }
           ].map((tool, i) => (
-            <div key={i} className={`p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border shadow-md transition-all hover:bg-slate-50/50 group active:scale-[0.98] ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-slate-100'}`}>
+            <div key={i} className={`p-6 rounded-xl border transition-all hover:-translate-y-0.5 group ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
               <div className="flex items-start justify-between mb-4 sm:mb-6">
                 <div className={`w-12 h-12 sm:w-14 sm:h-14 ${tool.color} rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
                   <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
@@ -763,81 +699,176 @@ const App: React.FC = () => {
     </div>
   );
 
-  return (
-    <div className={`min-h-[100dvh] font-sans flex flex-col items-center transition-colors duration-500`}>
-      <div className={`flex flex-col h-[100dvh] w-full relative overflow-hidden transition-all duration-300`}>
+  const AboutView = () => (
+    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
+      <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12">
+        {/* Header */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          </button>
+          <div>
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>About <span className="text-[#4285F4]">GDG SRMCEM</span></h2>
+            <p className="text-sm text-gray-500">1363 Group Members • Lucknow, India</p>
+          </div>
+        </div>
 
-        {/* Global Background Image — uses <img> instead of background-image for mobile compatibility */}
+        {/* Content Section */}
+        <div className={`p-6 sm:p-10 rounded-xl border transition-all duration-300 ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
+          <div className="space-y-6">
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Welcome to Google Developer Group (GDG) on Campus SRMCEM.</h3>
+            <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              We are a community driven by curiosity and built on collaboration. At SRMCEM, we bring together Developers, Innovators, and Google Fans to create an ecosystem where technology meets creativity.
+            </p>
+
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+              <h4 className={`text-lg font-bold flex items-center gap-2 mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span>🚀</span> Beyond the Campus Walls
+              </h4>
+              <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                We believe in learning that extends beyond just theory. Our chapter is a proud contributor to the wider tech landscape, serving as Co-Organizers for massive city-wide events like DevFest Lucknow and the AI Hackathon Lucknow. When you join us, you aren't just joining a college community; you are stepping into a wide network of industry professionals and tech leaders.
+              </p>
+              <div className="mt-5">
+                <a href="https://gdg.community.dev/gdg-on-campus-shri-ramswaroop-memorial-college-of-engineering-and-management-lucknow-india/" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:-translate-y-0.5 ${darkMode ? 'bg-slate-800 text-white hover:bg-slate-700' : 'bg-slate-100 text-gray-900 hover:bg-slate-200'}`}>
+                  View Chapter Page
+                  <svg className="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+              <h4 className={`text-lg font-bold flex items-center gap-2 mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span>✨</span> What We Experience Together
+              </h4>
+              <p className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>From writing your first line of code to deploying complex models, we support every step of your journey.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
+                  <h5 className={`font-bold text-sm mb-2 text-[#4285F4]`}>Deep Dives</h5>
+                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Master the latest technologies through Gen AI Study Jams, Build with AI events, and Skill-up Sessions. (Plus, there's plenty of exclusive Google swag for active learners!)</p>
+                </div>
+                <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
+                  <h5 className={`font-bold text-sm mb-2 text-[#EA4335]`}>Expert Insights</h5>
+                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Gain real-world perspective through our Speaker Sessions and hands-on Workshops led by industry experts.</p>
+                </div>
+                <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
+                  <h5 className={`font-bold text-sm mb-2 text-[#34A853]`}>Community & Vibes</h5>
+                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>It's not all work—we value connection. Our Community Building Events are designed to help you unwind, make friends, and bond over shared interests in technology.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+              <h4 className={`text-lg font-bold flex items-center gap-2 mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span>🤝</span> A Place for Everyone
+              </h4>
+              <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                Whether you are here to hack a solution, explore Google's latest tools, or simply find a group of friends who share your passion for tech, you belong here.<br /><br />
+                <strong className={`text-[#4285F4]`}>Join us at GDG on Campus SRMCEM—where we turn ideas into reality.</strong>
+              </p>
+              <div className="mt-6 flex flex-wrap gap-4">
+                <a href="https://gdg.community.dev/gdg-on-campus-shri-ramswaroop-memorial-college-of-engineering-and-management-lucknow-india/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#4285F4] hover:bg-[#3367D6] text-white font-bold rounded-lg shadow-lg shadow-[#4285F4]/30 transition-all hover:-translate-y-0.5 active:translate-y-0">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                  Join the Chapter
+                </a>
+                <button onClick={() => setCurrentView('events')} className={`inline-flex items-center justify-center gap-2 px-8 py-3 font-bold rounded-lg border-2 transition-all hover:-translate-y-0.5 active:translate-y-0 ${darkMode ? 'border-gray-700 text-gray-300 hover:text-white hover:border-gray-500' : 'border-gray-200 text-gray-700 hover:bg-gray-50'}`}>
+                  Upcoming Events
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className={`min-h-[100dvh] flex flex-col items-center transition-colors duration-500 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`}>
+      <div className={`flex flex-col h-[100dvh] w-full relative overflow-hidden transition-all duration-300 glow-frame`}>
+
+        {/* Global Background Image */}
         <img
           src="/team-bg.jpg"
           alt=""
           aria-hidden="true"
-          className={`absolute inset-0 w-full h-full object-cover object-center z-0 pointer-events-none select-none transition-opacity duration-500 delay-100 ${isHeaderBlurred ? 'opacity-0' : 'opacity-100'}`}
+          className={`absolute inset-0 w-full h-full object-cover object-[center_30%] z-0 pointer-events-none select-none transition-opacity duration-500 delay-100 ${isHeaderBlurred ? 'opacity-0' : 'opacity-100'}`}
         />
-        {/* Global Light Glassmorphism Base Overlay */}
-        <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-slate-950/30' : 'bg-white/15'} z-0`}></div>
-        {/* Global Subtle Gradient */}
-        <div className="absolute inset-0 z-0 pointer-events-none"></div>
+        {/* Dark overlay for readability */}
+        <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-black/60' : 'bg-black/40'} z-0`}></div>
 
-        {/* Header (ensure z-index keeps it above background) */}
-        <header className={`p-3 sm:p-5 flex items-center justify-between sticky top-0 z-40 transition-all duration-300 ${isHeaderBlurred ? (darkMode ? 'bg-slate-900/80 backdrop-blur-md shadow-sm' : 'bg-white/80 backdrop-blur-md shadow-sm') : 'bg-transparent'} ${isHeaderHidden ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
+        {/* Header â€” solid dark with blue glow underline */}
+        <header className={`px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-40 transition-all duration-300 bg-[#0a0a0a] header-glow `}>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setCurrentView('dashboard')}
               className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all active:scale-[0.98]"
             >
               <GDGLogo />
-              <h1 className="text-lg sm:text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">GDG Assistant</h1>
+              <h1 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">GDG <span className="text-[#4285F4]">Assistant</span></h1>
             </button>
           </div>
 
-          <div className="relative" ref={menuRef}>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`flex items-center gap-2 sm:gap-3 p-1 rounded-full transition-all border border-transparent ${darkMode ? 'hover:bg-slate-800 hover:border-slate-700' : 'hover:bg-slate-50 hover:border-slate-200'}`}
-            >
-              <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.name}`} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover shadow-sm ring-2 ring-blue-500/10 group-hover:ring-blue-500 transition-all" alt="Profile" />
-              <div className="hidden sm:block text-left mr-1">
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Session</p>
-                <p className="text-[11px] font-bold truncate max-w-[80px]">{user.name.split(' ')[0]}</p>
-              </div>
-              <svg className={`w-3 h-3 sm:w-4 sm:h-4 text-slate-400 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-            </button>
+          <div className="flex items-center gap-3 sm:gap-4">
+            {['Dashboard', 'About Us', 'Team', 'Events'].map((nav) => (
+              <button
+                key={nav}
+                onClick={() => setCurrentView(nav === 'Dashboard' ? 'dashboard' : nav === 'About Us' ? 'about' : nav === 'Team' ? 'leads' : 'events' as AppView)}
+                className={`hidden sm:block text-xs font-semibold tracking-wide transition-colors px-3 py-1.5 rounded-lg ${(nav === 'Dashboard' && currentView === 'dashboard') ||
+                  (nav === 'About Us' && currentView === 'about') ||
+                  (nav === 'Team' && currentView === 'leads') ||
+                  (nav === 'Events' && currentView === 'events')
+                  ? 'text-[#4285F4] bg-[#4285F4]/10'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                {nav}
+              </button>
+            ))}
 
-            {isMenuOpen && (
-              <div className={`absolute right-0 mt-3 w-56 sm:w-64 border shadow-2xl rounded-[1.5rem] sm:rounded-3xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
-                <div className={`px-5 py-3 sm:py-4 border-b mb-1 ${darkMode ? 'border-slate-700' : 'border-slate-50'}`}>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Session</p>
-                  <p className={`text-xs sm:text-sm font-black truncate ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>{user.name}</p>
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="flex items-center gap-2 p-1 rounded-full transition-all hover:bg-white/10"
+              >
+                <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.name}&background=4285F4&color=fff`} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover ring-2 ring-[#4285F4]/30" alt="Profile" />
+                <svg className={`w-3 h-3 text-gray-400 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+
+              {isMenuOpen && (
+                <div className="absolute right-0 mt-3 w-56 sm:w-64 border shadow-2xl rounded-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 bg-[#111] border-gray-800">
+                  <div className="px-5 py-3 border-b border-gray-800 mb-1">
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Session</p>
+                    <p className="text-sm font-bold text-white truncate">{user.name}</p>
+                  </div>
+
+                  {[
+                    { id: 'profile', icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z", label: 'My Identity' },
+                    { id: 'settings', icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z", label: 'Preferences' },
+                    { id: 'history', icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", label: 'Chat History' },
+                  ].map(item => (
+                    <button
+                      key={item.id}
+                      onClick={() => { setActiveModal(item.id as any); setIsMenuOpen(false); }}
+                      className="w-full text-left px-5 py-3 text-sm font-medium flex items-center gap-3 text-gray-300 hover:bg-white/5 hover:text-[#4285F4] transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
+                      {item.label}
+                    </button>
+                  ))}
+
+                  <div className="border-t border-gray-800 mt-1">
+                    <button onClick={() => { setActiveModal('confirmClear'); setIsMenuOpen(false); }} className="w-full text-left px-5 py-3 text-sm font-medium text-red-400 hover:bg-red-500/10 flex items-center gap-3 transition-colors">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                      Clear History
+                    </button>
+                    <button onClick={handleClearSession} className="w-full text-left px-5 py-3 text-sm font-medium text-red-400 hover:bg-red-500/10 flex items-center gap-3 transition-colors">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                      Reset Session
+                    </button>
+                  </div>
                 </div>
-
-                {[
-                  { id: 'profile', icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z", label: 'My Identity' },
-                  { id: 'settings', icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z", label: 'Preferences' },
-                  { id: 'history', icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", label: 'Chat History' },
-                ].map(item => (
-                  <button
-                    key={item.id}
-                    onClick={() => { setActiveModal(item.id as any); setIsMenuOpen(false); }}
-                    className={`w-full text-left px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-bold flex items-center gap-3 transition-colors ${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'}`}
-                  >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
-                    {item.label}
-                  </button>
-                ))}
-
-                <div className={`border-t mt-1 ${darkMode ? 'border-slate-700' : 'border-slate-50'}`}>
-                  <button onClick={() => { setActiveModal('confirmClear'); setIsMenuOpen(false); }} className="w-full text-left px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    Clear History
-                  </button>
-                  <button onClick={handleClearSession} className="w-full text-left px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                    Reset Session
-                  </button>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </header>
 
@@ -846,6 +877,7 @@ const App: React.FC = () => {
         {currentView === 'leads' && LeadsView()}
         {currentView === 'events' && EventsView()}
         {currentView === 'resources' && ResourcesView()}
+        {currentView === 'about' && AboutView()}
 
         {currentView === 'chat' && (
           <>
@@ -1074,17 +1106,6 @@ const App: React.FC = () => {
                   {activeModal === 'settings' && (
                     <div className="space-y-4 sm:space-y-6">
                       <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                        <button onClick={() => setDarkMode(!darkMode)} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                          <div className="flex items-center gap-3 sm:gap-4">
-                            <div className={`p-2 rounded-lg ${darkMode ? 'bg-slate-700 text-yellow-400' : 'bg-white text-blue-600 border'}`}>
-                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" /></svg>
-                            </div>
-                            <span className="font-bold text-sm sm:text-base">Dark Theme</span>
-                          </div>
-                          <div className={`w-10 sm:w-14 h-5 sm:h-7 rounded-full relative transition-all ${darkMode ? 'bg-blue-600' : 'bg-slate-300'}`}>
-                            <div className={`absolute top-0.5 sm:top-1 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full shadow-sm transition-all ${darkMode ? 'right-0.5 sm:right-1' : 'left-0.5 sm:left-1'}`}></div>
-                          </div>
-                        </button>
 
                         <button onClick={() => setBgType(bgType === 'grid' ? 'dots' : bgType === 'dots' ? 'plain' : 'grid')} className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border flex items-center justify-between transition-all ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
                           <div className="flex items-center gap-3 sm:gap-4">
