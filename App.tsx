@@ -80,6 +80,14 @@ const App: React.FC = () => {
   const [showAboutScrollTop, setShowAboutScrollTop] = useState(false);
   const aboutScrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // LeadsView Scroll State
+  const [showLeadsScrollTop, setShowLeadsScrollTop] = useState(false);
+  const leadsScrollRef = useRef<HTMLDivElement>(null);
+
+  // ResourcesView Scroll State
+  const [showResourcesScrollTop, setShowResourcesScrollTop] = useState(false);
+  const resourcesScrollContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const savedUser = localStorage.getItem('gdg_assistant_user');
     if (savedUser) {
@@ -489,7 +497,6 @@ const App: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {[
                   { view: 'chat', title: 'AI Assistant', badge: 'Gemini 2.0', desc: 'Get technical advice, debug code, brainstorm architecture, and analyze videos with Gemini-powered AI.', icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z", color: '#4285F4' },
-                  { view: 'events', title: 'Event Timeline', badge: 'Live', desc: 'Browse upcoming DevFests, Hack-A-Thons, WTM Summits, and workshops.', icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z", color: '#FBBC05' },
                   { view: 'certification', title: 'Certification Zone', badge: 'External', externalUrl: 'https://gdg-certify.vercel.app/', desc: 'Earn official Google credentials and validate your skills.', icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z", color: '#34A853' }
                 ].map((item: any, i) => (
                   <button key={i} onClick={() => { if (item.externalUrl) { window.open(item.externalUrl, '_blank'); } else { setCurrentView(item.view as AppView); } }}
@@ -573,55 +580,130 @@ const App: React.FC = () => {
     );
   };
 
-  const LeadsView = () => (
-    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
-      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`self-start p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-          </button>
-          <div>
-            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>GDG <span className="text-[#4285F4]">Leads</span></h2>
-            <p className="text-sm text-gray-500 mt-2">
-              GDG on Campus SRMCEM Organizing Team (8 Members).<br />
-              Meet the organizing team. Reach out for mentorship, guidance, and collaboration.
-            </p>
+  const LeadsView = () => {
+    const handleLocalScroll = (e: React.UIEvent<HTMLDivElement>) => {
+      setShowLeadsScrollTop(e.currentTarget.scrollTop > 300);
+      handleScroll(e);
+    };
+
+    const scrollToTop = () => {
+      leadsScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+      <div
+        ref={leadsScrollRef}
+        className={`flex-1 overflow-y-auto p-4 sm:p-8 relative ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`}
+        onScroll={handleLocalScroll}
+      >
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            <button onClick={() => setCurrentView('dashboard')} className={`self-start p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            </button>
+            <div>
+              <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Our <span className="text-[#4285F4]">Team</span></h2>
+              <p className="text-sm text-gray-500 mt-2">
+                GDG on Campus SRMCEM Organizing Team.<br />
+                Meet the people behind the community. Reach out for mentorship, guidance, and collaboration.
+              </p>
+            </div>
+          </div>
+
+          {/* ===== LEADS SECTION ===== */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-8 bg-[#4285F4] rounded-full"></div>
+              <h3 className={`text-xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Leads</h3>
+              <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${darkMode ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>Core Team</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {[
+                { name: "Priyam Srivastava", role: "Organizer (Lead)", email: "gdg.srmcem@gmail.com", color: "from-blue-500 to-blue-600" },
+                { name: "Navleen Kaur", role: "Co-Organizer", email: "gdg.srmcem@gmail.com", color: "from-red-500 to-red-600" },
+                { name: "Lav Kumar Shakya", role: "Technical Head", email: "gdg.srmcem@gmail.com", color: "from-green-500 to-green-600" },
+                { name: "Udit Maurya", role: "Social Media Head", email: "gdg.srmcem@gmail.com", color: "from-yellow-500 to-yellow-600" },
+                { name: "Bhanu Pratap Singh", role: "Marketing Head", email: "gdg.srmcem@gmail.com", color: "from-indigo-500 to-indigo-600" },
+                { name: "Ayush Pandey", role: "Creative Head", email: "gdg.srmcem@gmail.com", color: "from-cyan-500 to-cyan-600" },
+                { name: "Kirti", role: "Event and PR Head", email: "gdg.srmcem@gmail.com", color: "from-orange-500 to-orange-600" },
+                { name: "Ananay Verma", role: "Social Media Co-Head", email: "gdg.srmcem@gmail.com", color: "from-purple-500 to-purple-600" }
+              ].map((lead, i) => (
+                <div key={i} className={`group p-6 rounded-xl border flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
+                  <div className="flex items-center gap-4 sm:gap-5">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${lead.color} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md`}>
+                      {lead.name[0]}
+                    </div>
+                    <div>
+                      <h4 className={`font-bold text-base ${darkMode ? 'text-white' : 'text-gray-900'}`}>{lead.name}</h4>
+                      <p className="text-[10px] font-bold text-[#4285F4] uppercase tracking-wider">{lead.role}</p>
+                    </div>
+                  </div>
+                  <div className={`p-3 rounded-lg border flex items-center gap-2 ${darkMode ? 'bg-black/30 border-gray-800' : 'bg-gray-50 border-gray-200'}`}>
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" /></svg>
+                    <span className={`text-[10px] sm:text-sm font-mono font-medium truncate select-all ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                      {lead.email}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ===== COORDINATORS SECTION ===== */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-8 bg-[#34A853] rounded-full"></div>
+              <h3 className={`text-xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Coordinators</h3>
+              <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${darkMode ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-50 text-green-600 border border-green-100'}`}>Support Team</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pb-12">
+              {[
+                { name: "Ishan Kumar Tiwari", role: "Technical Coordinator", linkedin: "https://www.linkedin.com/in/ishan-kumar-tiwari/", color: "from-teal-500 to-teal-600" },
+                { name: "Shikhar Shahi", role: "Technical Coordinator", linkedin: "https://www.linkedin.com/in/shikhar-shahi-7934a327a/", color: "from-sky-500 to-sky-600" },
+                { name: "Aditya Srivastav", role: "Marketing Coordinator", linkedin: "https://www.linkedin.com/in/aditya-srivastav-85776a306/", color: "from-amber-500 to-amber-600" },
+                { name: "Eshaan Singh Deo", role: "Marketing Coordinator", linkedin: "https://www.linkedin.com/in/eshaan-singh-deo-ba669433a/", color: "from-rose-500 to-rose-600" },
+                { name: "Pranjali Nigam", role: "Event and PR Coordinator", linkedin: "http://linkedin.com/in/pranjali-nigam-29513a389/", color: "from-fuchsia-500 to-fuchsia-600" },
+                { name: "Aadya Srivastava", role: "Event and PR Coordinator", linkedin: "https://www.linkedin.com/in/aadya-srivastava-6a7945387/", color: "from-pink-500 to-pink-600" },
+                { name: "Anushka Nigam", role: "Creative Coordinator", linkedin: "https://www.linkedin.com/in/anushka-nigam-ai/", color: "from-violet-500 to-violet-600" },
+                { name: "Divyansh Pal", role: "Creative Coordinator", linkedin: "https://www.linkedin.com/in/divyansh-pal-3b3abb31a/", color: "from-lime-500 to-lime-600" },
+                { name: "Eshika Verma", role: "Creative Coordinator", linkedin: "https://www.linkedin.com/in/eshika-verma-64058a357/", color: "from-emerald-500 to-emerald-600" },
+                { name: "Jigyasa Tiwari", role: "Social Media Coordinator", linkedin: "https://www.linkedin.com/in/jigyasatiwari/", color: "from-blue-500 to-blue-600" },
+                { name: "Aamina Hassan", role: "Social Media Coordinator", linkedin: "https://www.linkedin.com/in/aamina-hasan-50a6a930b/", color: "from-purple-500 to-purple-600" },
+              ].map((coord, i) => (
+                <div key={i} className={`group p-6 rounded-xl border flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
+                  <div className="flex items-center gap-4 sm:gap-5">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${coord.color} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md`}>
+                      {coord.name[0]}
+                    </div>
+                    <div>
+                      <h4 className={`font-bold text-base ${darkMode ? 'text-white' : 'text-gray-900'}`}>{coord.name}</h4>
+                      <p className="text-[10px] font-bold text-[#34A853] uppercase tracking-wider">{coord.role}</p>
+                    </div>
+                  </div>
+                  <a href={coord.linkedin} target="_blank" rel="noopener noreferrer" className={`p-3 rounded-lg border flex items-center gap-2 transition-colors ${darkMode ? 'bg-black/30 border-gray-800 hover:border-blue-500/50 hover:bg-blue-500/5' : 'bg-gray-50 border-gray-200 hover:border-blue-400 hover:bg-blue-50'}`}>
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#0A66C2] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                    <span className={`text-[10px] sm:text-sm font-medium truncate ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                      LinkedIn Profile
+                    </span>
+                    <svg className="w-3 h-3 ml-auto text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pb-12">
-          {[
-            { name: "Priyam Srivastava", role: "Organizer (Lead)", email: "gdg.srmcem@gmail.com", color: "from-blue-500 to-blue-600" },
-            { name: "Navleen Kaur", role: "Co-Organizer", email: "gdg.srmcem@gmail.com", color: "from-red-500 to-red-600" },
-            { name: "Lav Kumar Shakya", role: "Technical Head", email: "gdg.srmcem@gmail.com", color: "from-green-500 to-green-600" },
-            { name: "Udit Maurya", role: "Social Media Head", email: "gdg.srmcem@gmail.com", color: "from-yellow-500 to-yellow-600" },
-            { name: "Bhanu Pratap Singh", role: "Marketing Head", email: "gdg.srmcem@gmail.com", color: "from-indigo-500 to-indigo-600" },
-            { name: "Ayush Pandey", role: "Creative Head", email: "gdg.srmcem@gmail.com", color: "from-cyan-500 to-cyan-600" },
-            { name: "Kirti", role: "Event and PR Head", email: "gdg.srmcem@gmail.com", color: "from-orange-500 to-orange-600" },
-            { name: "Ananay Verma", role: "Social Media Co-Head", email: "gdg.srmcem@gmail.com", color: "from-purple-500 to-purple-600" }
-          ].map((lead, i) => (
-            <div key={i} className={`group p-6 rounded-xl border flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
-              <div className="flex items-center gap-4 sm:gap-5">
-                <div className={`w-12 h-12 bg-gradient-to-br ${lead.color} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md`}>
-                  {lead.name[0]}
-                </div>
-                <div>
-                  <h4 className={`font-bold text-base ${darkMode ? 'text-white' : 'text-gray-900'}`}>{lead.name}</h4>
-                  <p className="text-[10px] font-bold text-[#4285F4] uppercase tracking-wider">{lead.role}</p>
-                </div>
-              </div>
-              <div className={`p-3 rounded-lg border flex items-center gap-2 ${darkMode ? 'bg-black/30 border-gray-800' : 'bg-gray-50 border-gray-200'}`}>
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" /></svg>
-                <span className={`text-[10px] sm:text-sm font-mono font-medium truncate select-all ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                  {lead.email}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Scroll to Top Button */}
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-50 hover:scale-110 active:scale-95 shadow-lg ${showLeadsScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'} ${darkMode ? 'bg-[#111] text-[#4285F4] border border-gray-800' : 'bg-white text-[#4285F4] border border-gray-200'}`}
+          title="Scroll to Top"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+        </button>
       </div>
-    </div>
-  );
+    );
+  };
 
   const EventsView = () => (
     <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
@@ -665,45 +747,84 @@ const App: React.FC = () => {
     </div>
   );
 
-  const ResourcesView = () => (
-    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
-      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
-        <div className="flex items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-          </button>
-          <div>
-            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Dev <span className="text-[#4285F4]">Toolbox</span></h2>
-            <p className="text-sm text-gray-500">Core Google technologies for builders.</p>
+  const ResourcesView = () => {
+    const handleResourcesScroll = (e: React.UIEvent<HTMLDivElement>) => {
+      handleScroll(e);
+      setShowResourcesScrollTop(e.currentTarget.scrollTop > 300);
+    };
+
+    const scrollToTop = () => {
+      resourcesScrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+      <div ref={resourcesScrollContainerRef} className={`flex-1 overflow-y-auto p-4 sm:p-8 relative ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleResourcesScroll}>
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            </button>
+            <div>
+              <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Tech <span className="text-[#4285F4]">Hub</span></h2>
+              <p className="text-sm text-gray-500">Core Google technologies for builders explored briefly.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {[
+              { name: "Firebase", category: "Full Stack", desc: "Backend-as-a-Service including Hosting, Auth, and NoSQL databases for rapid MVP development.", color: 'bg-[#FFCA28]', url: 'https://firebase.google.com/' },
+              { name: "Gemini API", category: "Intelligence", desc: "Access Google's most capable multimodal AI models for intelligent features in your app.", color: 'bg-[#8E24AA]', url: 'https://ai.google.dev/' },
+              { name: "Google Cloud", category: "Infrastructure", desc: "Scalable computing, storage, and advanced specialized APIs for vision and speech.", color: 'bg-[#4285F4]', url: 'https://cloud.google.com/' },
+              { name: "Flutter", category: "Mobile/Web", desc: "Build beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.", color: 'bg-[#0468D7]', url: 'https://flutter.dev/' },
+              { name: "TensorFlow", category: "Machine Learning", desc: "The end-to-end open source platform for machine learning, from research to production.", color: 'bg-[#FF6F00]', url: 'https://www.tensorflow.org/' },
+              { name: "Android Studio", category: "Mobile", desc: "The official Integrated Development Environment (IDE) for Android app development.", color: 'bg-[#3DDC84]', url: 'https://developer.android.com/studio' },
+              { name: "Chrome DevTools", category: "Web", desc: "A set of web developer tools built directly into the Google Chrome browser.", color: 'bg-[#4285F4]', url: 'https://developer.chrome.com/docs/devtools/' },
+              { name: "Angular", category: "Web", desc: "A web development framework for building fast, reliable, and scalable web applications.", color: 'bg-[#DD0031]', url: 'https://angular.dev/' },
+              { name: "Google Maps Platform", category: "APIs", desc: "Build location-based features with rich maps, routes, and places APIs.", color: 'bg-[#34A853]', url: 'https://mapsplatform.google.com/' },
+              { name: "Material Design", category: "UI/UX", desc: "Google's open-source design system to help teams build high-quality digital experiences.", color: 'bg-[#EA4335]', url: 'https://m3.material.io/' },
+              { name: "React", category: "Frontend", desc: "A JavaScript library for building user interfaces containing reusable components.", color: 'bg-[#61DAFB]', url: 'https://react.dev/' },
+              { name: "Next.js", category: "Full Stack", desc: "The React Framework for the Web with built-in routing, API creation, and rendering optimizations.", color: 'bg-[#000000]', url: 'https://nextjs.org/' },
+              { name: "Node.js", category: "Backend", desc: "An asynchronous event-driven JavaScript runtime designed to build scalable network applications.", color: 'bg-[#339933]', url: 'https://nodejs.org/' },
+              { name: "Tailwind CSS", category: "Styling", desc: "A utility-first CSS framework packed with classes to build any design, directly in your markup.", color: 'bg-[#06B6D4]', url: 'https://tailwindcss.com/' },
+              { name: "Docker", category: "DevOps", desc: "Accelerate how you build, share, and run applications in isolated containerized environments.", color: 'bg-[#2496ED]', url: 'https://www.docker.com/' },
+              { name: "Postman", category: "API Testing", desc: "An API platform for building and using APIs, simplifying each step of the API lifecycle.", color: 'bg-[#FF6C37]', url: 'https://www.postman.com/' }
+            ].map((tool, i) => (
+              <a href={tool.url} target="_blank" rel="noopener noreferrer" key={i} className={`block p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 group cursor-pointer overflow-hidden relative ${darkMode ? 'bg-[#151515] border-gray-800/60 hover:border-gray-600 hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-sm hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]'}`}>
+
+                {/* Subtle gradient background on hover */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${tool.color.replace('bg-', 'bg-gradient-to-br from-transparent to-')}`}></div>
+
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-5">
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 ${tool.color} rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                      <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <span className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${darkMode ? 'bg-[#0a0a0a] border-gray-800 text-gray-400 group-hover:text-white group-hover:border-gray-600 transition-colors' : 'bg-gray-50 border-gray-200 text-gray-500 group-hover:text-gray-800 transition-colors'}`}>
+                      {tool.category}
+                    </span>
+                  </div>
+                  <h4 className={`font-black text-xl mb-3 flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    {tool.name}
+                    <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#4285F4]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium mb-4">{tool.desc}</p>
+                  <div className={`h-1 w-12 ${tool.color} rounded-full group-hover:w-full transition-all duration-700 opacity-80`}></div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-          {[
-            { name: "Firebase", category: "Full Stack", desc: "Backend-as-a-Service including Hosting, Auth, and NoSQL databases for rapid MVP development.", color: 'bg-yellow-500' },
-            { name: "Gemini API", category: "Intelligence", desc: "Access Google's most capable multimodal AI models for intelligent features in your app.", color: 'bg-blue-600' },
-            { name: "Google Cloud", category: "Infrastructure", desc: "Scalable computing, storage, and advanced specialized APIs for vision and speech.", color: 'bg-blue-400' },
-            { name: "Flutter", category: "Mobile/Web", desc: "Build beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.", color: 'bg-indigo-500' },
-            { name: "TensorFlow", category: "Machine Learning", desc: "The end-to-end open source platform for machine learning, from research to production.", color: 'bg-orange-500' },
-            { name: "Material Design", category: "UI/UX", desc: "Google's open-source design system to help teams build high-quality digital experiences.", color: 'bg-red-500' }
-          ].map((tool, i) => (
-            <div key={i} className={`p-6 rounded-xl border transition-all hover:-translate-y-0.5 group ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
-              <div className="flex items-start justify-between mb-4 sm:mb-6">
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 ${tool.color} rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
-                  <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                </div>
-                <span className={`px-2.5 py-1 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border ${darkMode ? 'bg-slate-900 border-slate-700 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-500'}`}>
-                  {tool.category}
-                </span>
-              </div>
-              <h4 className="font-black text-lg sm:text-xl mb-2 sm:mb-3">{tool.name}</h4>
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium mb-4">{tool.desc}</p>
-              <div className="h-1 w-12 bg-blue-500/20 rounded-full group-hover:w-full transition-all duration-700"></div>
-            </div>
-          ))}
-        </div>
+
+        {/* Scroll To Top Button */}
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-50 hover:scale-110 active:scale-95 shadow-lg ${showResourcesScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'} ${darkMode ? 'bg-[#111] text-[#4285F4] border border-gray-800' : 'bg-white text-[#4285F4] border border-gray-200'}`}
+          title="Scroll to Top"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+        </button>
       </div>
-    </div>
-  );
+    );
+  };
 
   const AboutView = () => {
     const handleAboutScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -831,12 +952,14 @@ const App: React.FC = () => {
       <div className={`flex flex-col h-[100dvh] w-full relative overflow-hidden transition-all duration-300 glow-frame`}>
 
         {/* Global Background Image */}
-        <img
-          src="/team-bg.jpg"
-          alt=""
-          aria-hidden="true"
-          className={`absolute inset-0 w-full h-full object-cover object-[center_30%] z-0 pointer-events-none select-none transition-opacity duration-500 delay-100 ${isHeaderBlurred ? 'opacity-0' : 'opacity-100'}`}
-        />
+        {currentView !== 'leads' && currentView !== 'resources' && (
+          <img
+            src="/team-bg.jpg"
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 w-full h-full object-cover object-bottom z-0 pointer-events-none select-none transition-opacity duration-500 delay-100 ${isHeaderBlurred ? 'opacity-0' : 'opacity-100'}`}
+          />
+        )}
         {/* Dark overlay for readability */}
         <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-black/60' : 'bg-black/40'} z-0`}></div>
 
@@ -853,14 +976,20 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {['Home', 'About Us', 'GDG Leads', 'Events'].map((nav) => (
+            {['Home', 'About Us', 'Our Team', 'Tech Hub'].map((nav) => (
               <button
                 key={nav}
-                onClick={() => setCurrentView(nav === 'Home' ? 'dashboard' : nav === 'About Us' ? 'about' : nav === 'GDG Leads' ? 'leads' : 'events' as AppView)}
+                onClick={() => {
+                  if (nav === 'Tech Hub') {
+                    setCurrentView('resources');
+                  } else {
+                    setCurrentView(nav === 'Home' ? 'dashboard' : nav === 'About Us' ? 'about' : 'leads' as AppView);
+                  }
+                }}
                 className={`hidden sm:block text-xs font-semibold tracking-wide transition-colors px-3 py-1.5 rounded-lg ${(nav === 'Home' && currentView === 'dashboard') ||
                   (nav === 'About Us' && currentView === 'about') ||
-                  (nav === 'GDG Leads' && currentView === 'leads') ||
-                  (nav === 'Events' && currentView === 'events')
+                  (nav === 'Our Team' && currentView === 'leads') ||
+                  (nav === 'Tech Hub' && currentView === 'resources')
                   ? 'text-[#4285F4] bg-[#4285F4]/10'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}

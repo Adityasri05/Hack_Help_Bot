@@ -1,0 +1,4 @@
+﻿8339b02 UI: Complete redesign, add About Us section, fix emojis, set default dark mode
+ee57f21 Fix background image for mobile, improve responsiveness
+e8fce0d Use env variable for API key, update model to gemini-2.5-flash-lite, add .env to gitignore
+c354cf1 Initial commit: Hack Help Bot project
