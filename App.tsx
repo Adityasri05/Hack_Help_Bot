@@ -767,13 +767,15 @@ const App: React.FC = () => {
     <div className={`min-h-[100dvh] font-sans flex flex-col items-center transition-colors duration-500`}>
       <div className={`flex flex-col h-[100dvh] w-full relative overflow-hidden transition-all duration-300`}>
 
-        {/* Global Background Image (Visible behind header and content) */}
-        <div
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed object-cover w-full h-full z-0 transition-opacity duration-500 delay-100 ${isHeaderBlurred ? 'opacity-0' : 'opacity-100'}`}
-          style={{ backgroundImage: 'url("/team-bg.jpg")' }}
-        ></div>
+        {/* Global Background Image — uses <img> instead of background-image for mobile compatibility */}
+        <img
+          src="/team-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          className={`absolute inset-0 w-full h-full object-cover object-center z-0 pointer-events-none select-none transition-opacity duration-500 delay-100 ${isHeaderBlurred ? 'opacity-0' : 'opacity-100'}`}
+        />
         {/* Global Light Glassmorphism Base Overlay */}
-        <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-slate-950/20' : 'bg-white/10'} z-0`}></div>
+        <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-slate-950/30' : 'bg-white/15'} z-0`}></div>
         {/* Global Subtle Gradient */}
         <div className="absolute inset-0 z-0 pointer-events-none"></div>
 
