@@ -76,6 +76,10 @@ const App: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
 
+  // AboutView Scroll State
+  const [showAboutScrollTop, setShowAboutScrollTop] = useState(false);
+  const aboutScrollContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const savedUser = localStorage.getItem('gdg_assistant_user');
     if (savedUser) {
@@ -485,7 +489,6 @@ const App: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {[
                   { view: 'chat', title: 'AI Assistant', badge: 'Gemini 2.0', desc: 'Get technical advice, debug code, brainstorm architecture, and analyze videos with Gemini-powered AI.', icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z", color: '#4285F4' },
-                  { view: 'leads', title: 'GDG Leads', badge: '8 Members', desc: 'Meet the organizing team. Reach out for mentorship, guidance, and collaboration.', icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z", color: '#EA4335' },
                   { view: 'events', title: 'Event Timeline', badge: 'Live', desc: 'Browse upcoming DevFests, Hack-A-Thons, WTM Summits, and workshops.', icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z", color: '#FBBC05' },
                   { view: 'certification', title: 'Certification Zone', badge: 'External', externalUrl: 'https://gdg-certify.vercel.app/', desc: 'Earn official Google credentials and validate your skills.', icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z", color: '#34A853' }
                 ].map((item: any, i) => (
@@ -579,7 +582,10 @@ const App: React.FC = () => {
           </button>
           <div>
             <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>GDG <span className="text-[#4285F4]">Leads</span></h2>
-            <p className="text-sm text-gray-500">GDG on Campus SRMCEM Organizing Team (8 members).</p>
+            <p className="text-sm text-gray-500 mt-2">
+              GDG on Campus SRMCEM Organizing Team (8 Members).<br />
+              Meet the organizing team. Reach out for mentorship, guidance, and collaboration.
+            </p>
           </div>
         </div>
 
@@ -699,88 +705,126 @@ const App: React.FC = () => {
     </div>
   );
 
-  const AboutView = () => (
-    <div className={`flex-1 overflow-y-auto p-4 sm:p-8 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleScroll}>
-      <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12">
-        {/* Header */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-          </button>
-          <div>
-            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>About <span className="text-[#4285F4]">GDG SRMCEM</span></h2>
-            <p className="text-sm text-gray-500">1363 Group Members • Lucknow, India</p>
+  const AboutView = () => {
+    const handleAboutScroll = (e: React.UIEvent<HTMLDivElement>) => {
+      handleScroll(e);
+      setShowAboutScrollTop(e.currentTarget.scrollTop > 300);
+    };
+
+    const scrollToTop = () => {
+      aboutScrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+      <div ref={aboutScrollContainerRef} className={`flex-1 overflow-y-auto p-4 sm:p-8 relative ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleAboutScroll}>
+        <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12">
+          {/* Header */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            </button>
+            <div>
+              <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>About <span className="text-[#4285F4]">GDG SRMCEM</span></h2>
+              <p className="text-sm text-gray-500">1363 Group Members • Lucknow, India</p>
+            </div>
+          </div>
+
+          {/* Content Section */}
+          <div className={`p-6 sm:p-10 rounded-xl border transition-all duration-300 ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
+            <div className="space-y-6">
+              <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Welcome to Google Developer Group (GDG) on Campus SRMCEM.</h3>
+              <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                We are a community driven by curiosity and built on collaboration. At SRMCEM, we bring together Developers, Innovators, and Google Fans to create an ecosystem where technology meets creativity.
+              </p>
+
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                <h4 className={`text-lg font-bold flex items-center gap-2 mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span>🚀</span> Beyond the Campus Walls
+                </h4>
+                <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  We believe in learning that extends beyond just theory. Our chapter is a proud contributor to the wider tech landscape, serving as Co-Organizers for massive city-wide events like DevFest Lucknow and the AI Hackathon Lucknow. When you join us, you aren't just joining a college community; you are stepping into a wide network of industry professionals and tech leaders.
+                </p>
+                <div className="mt-5">
+                  <a href="https://gdg.community.dev/gdg-on-campus-shri-ramswaroop-memorial-college-of-engineering-and-management-lucknow-india/" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:-translate-y-0.5 ${darkMode ? 'bg-slate-800 text-white hover:bg-slate-700' : 'bg-slate-100 text-gray-900 hover:bg-slate-200'}`}>
+                    View Chapter Page
+                    <svg className="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                <h4 className={`text-lg font-bold flex items-center gap-2 mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span>✨</span> What We Experience Together
+                </h4>
+                <p className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>From writing your first line of code to deploying complex models, we support every step of your journey.</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
+                    <h5 className={`font-bold text-sm mb-2 text-[#4285F4]`}>Deep Dives</h5>
+                    <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Master the latest technologies through Gen AI Study Jams, Build with AI events, and Skill-up Sessions. (Plus, there's plenty of exclusive Google swag for active learners!)</p>
+                  </div>
+                  <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
+                    <h5 className={`font-bold text-sm mb-2 text-[#EA4335]`}>Expert Insights</h5>
+                    <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Gain real-world perspective through our Speaker Sessions and hands-on Workshops led by industry experts.</p>
+                  </div>
+                  <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
+                    <h5 className={`font-bold text-sm mb-2 text-[#34A853]`}>Community & Vibes</h5>
+                    <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>It's not all work—we value connection. Our Community Building Events are designed to help you unwind, make friends, and bond over shared interests in technology.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                <h4 className={`text-lg font-bold flex items-center gap-2 mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span>🛠️</span> Core Technologies We Explore
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                  <div className={`p-3 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'} flex flex-col items-center justify-center text-center`}>
+                    <span className="text-2xl mb-1">📱</span>
+                    <span className={`text-xs font-bold ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Android</span>
+                  </div>
+                  <div className={`p-3 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'} flex flex-col items-center justify-center text-center`}>
+                    <span className="text-2xl mb-1">☁️</span>
+                    <span className={`text-xs font-bold ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Google Cloud</span>
+                  </div>
+                  <div className={`p-3 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'} flex flex-col items-center justify-center text-center`}>
+                    <span className="text-2xl mb-1">🌐</span>
+                    <span className={`text-xs font-bold ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Web Dev</span>
+                  </div>
+                  <div className={`p-3 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'} flex flex-col items-center justify-center text-center`}>
+                    <span className="text-2xl mb-1">🤖</span>
+                    <span className={`text-xs font-bold ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>AI / ML</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                <h4 className={`text-lg font-bold flex items-center gap-2 mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span>🤝</span> A Place for Everyone
+                </h4>
+                <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Whether you are here to hack a solution, explore Google's latest tools, or simply find a group of friends who share your passion for tech, you belong here.<br /><br />
+                  <strong className={`text-[#4285F4]`}>Join us at GDG on Campus SRMCEM—where we turn ideas into reality.</strong>
+                </p>
+                <p className={`text-xs mt-4 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                  Reach out to the organizing team through our official community page or check the Team section for direct contacts!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Content Section */}
-        <div className={`p-6 sm:p-10 rounded-xl border transition-all duration-300 ${darkMode ? 'bg-[#111] border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}>
-          <div className="space-y-6">
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Welcome to Google Developer Group (GDG) on Campus SRMCEM.</h3>
-            <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              We are a community driven by curiosity and built on collaboration. At SRMCEM, we bring together Developers, Innovators, and Google Fans to create an ecosystem where technology meets creativity.
-            </p>
-
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-              <h4 className={`text-lg font-bold flex items-center gap-2 mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                <span>🚀</span> Beyond the Campus Walls
-              </h4>
-              <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                We believe in learning that extends beyond just theory. Our chapter is a proud contributor to the wider tech landscape, serving as Co-Organizers for massive city-wide events like DevFest Lucknow and the AI Hackathon Lucknow. When you join us, you aren't just joining a college community; you are stepping into a wide network of industry professionals and tech leaders.
-              </p>
-              <div className="mt-5">
-                <a href="https://gdg.community.dev/gdg-on-campus-shri-ramswaroop-memorial-college-of-engineering-and-management-lucknow-india/" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:-translate-y-0.5 ${darkMode ? 'bg-slate-800 text-white hover:bg-slate-700' : 'bg-slate-100 text-gray-900 hover:bg-slate-200'}`}>
-                  View Chapter Page
-                  <svg className="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </a>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-              <h4 className={`text-lg font-bold flex items-center gap-2 mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                <span>✨</span> What We Experience Together
-              </h4>
-              <p className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>From writing your first line of code to deploying complex models, we support every step of your journey.</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
-                  <h5 className={`font-bold text-sm mb-2 text-[#4285F4]`}>Deep Dives</h5>
-                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Master the latest technologies through Gen AI Study Jams, Build with AI events, and Skill-up Sessions. (Plus, there's plenty of exclusive Google swag for active learners!)</p>
-                </div>
-                <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
-                  <h5 className={`font-bold text-sm mb-2 text-[#EA4335]`}>Expert Insights</h5>
-                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Gain real-world perspective through our Speaker Sessions and hands-on Workshops led by industry experts.</p>
-                </div>
-                <div className={`p-4 rounded-lg border ${darkMode ? 'bg-slate-800/30 border-gray-700' : 'bg-slate-50 border-gray-200'}`}>
-                  <h5 className={`font-bold text-sm mb-2 text-[#34A853]`}>Community & Vibes</h5>
-                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>It's not all work—we value connection. Our Community Building Events are designed to help you unwind, make friends, and bond over shared interests in technology.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-              <h4 className={`text-lg font-bold flex items-center gap-2 mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                <span>🤝</span> A Place for Everyone
-              </h4>
-              <p className={`text-sm leading-relaxed ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                Whether you are here to hack a solution, explore Google's latest tools, or simply find a group of friends who share your passion for tech, you belong here.<br /><br />
-                <strong className={`text-[#4285F4]`}>Join us at GDG on Campus SRMCEM—where we turn ideas into reality.</strong>
-              </p>
-              <div className="mt-6 flex flex-wrap gap-4">
-                <a href="https://gdg.community.dev/gdg-on-campus-shri-ramswaroop-memorial-college-of-engineering-and-management-lucknow-india/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#4285F4] hover:bg-[#3367D6] text-white font-bold rounded-lg shadow-lg shadow-[#4285F4]/30 transition-all hover:-translate-y-0.5 active:translate-y-0">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-                  Join the Chapter
-                </a>
-                <button onClick={() => setCurrentView('events')} className={`inline-flex items-center justify-center gap-2 px-8 py-3 font-bold rounded-lg border-2 transition-all hover:-translate-y-0.5 active:translate-y-0 ${darkMode ? 'border-gray-700 text-gray-300 hover:text-white hover:border-gray-500' : 'border-gray-200 text-gray-700 hover:bg-gray-50'}`}>
-                  Upcoming Events
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Scroll To Top Button */}
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-50 hover:scale-110 active:scale-95 shadow-lg ${showAboutScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'} ${darkMode ? 'bg-[#111] text-[#4285F4] border border-gray-800' : 'bg-white text-[#4285F4] border border-gray-200'}`}
+          title="Scroll to Top"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+        </button>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className={`min-h-[100dvh] flex flex-col items-center transition-colors duration-500 ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`}>
@@ -809,13 +853,13 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {['Dashboard', 'About Us', 'Team', 'Events'].map((nav) => (
+            {['Home', 'About Us', 'GDG Leads', 'Events'].map((nav) => (
               <button
                 key={nav}
-                onClick={() => setCurrentView(nav === 'Dashboard' ? 'dashboard' : nav === 'About Us' ? 'about' : nav === 'Team' ? 'leads' : 'events' as AppView)}
-                className={`hidden sm:block text-xs font-semibold tracking-wide transition-colors px-3 py-1.5 rounded-lg ${(nav === 'Dashboard' && currentView === 'dashboard') ||
+                onClick={() => setCurrentView(nav === 'Home' ? 'dashboard' : nav === 'About Us' ? 'about' : nav === 'GDG Leads' ? 'leads' : 'events' as AppView)}
+                className={`hidden sm:block text-xs font-semibold tracking-wide transition-colors px-3 py-1.5 rounded-lg ${(nav === 'Home' && currentView === 'dashboard') ||
                   (nav === 'About Us' && currentView === 'about') ||
-                  (nav === 'Team' && currentView === 'leads') ||
+                  (nav === 'GDG Leads' && currentView === 'leads') ||
                   (nav === 'Events' && currentView === 'events')
                   ? 'text-[#4285F4] bg-[#4285F4]/10'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -887,7 +931,7 @@ const App: React.FC = () => {
                 className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 shadow-sm ${darkMode ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
                 <svg className="w-3.5 h-3.5 sm:w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                <span className="hidden xs:inline">Dashboard</span>
+                <span className="hidden xs:inline">Home</span>
               </button>
 
               <div className="flex items-center gap-2 sm:gap-4">
