@@ -31,6 +31,7 @@ const App: React.FC = () => {
   const [isAppLoaded, setIsAppLoaded] = useState(false);
   const [isHeaderBlurred, setIsHeaderBlurred] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -977,9 +978,19 @@ const App: React.FC = () => {
         {/* Dark overlay for readability */}
         <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-black/60' : 'bg-black/40'} z-0`}></div>
 
-        {/* Header â€” solid dark with blue glow underline */}
+        {/* Header — solid dark with blue glow underline */}
         <header className={`px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-40 transition-all duration-300 bg-[#0a0a0a] header-glow `}>
           <div className="flex items-center gap-3">
+            {/* Hamburger Menu Icon for Mobile/Tablet */}
+            <button
+              onClick={() => setIsSideNavOpen(true)}
+              className={`lg:hidden p-2 -ml-2 rounded-lg transition-colors hover:bg-white/10 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
+              aria-label="Open Menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
             <button
               onClick={() => setCurrentView('dashboard')}
               className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all active:scale-[0.98]"
@@ -1000,7 +1011,7 @@ const App: React.FC = () => {
                     setCurrentView(nav === 'Home' ? 'dashboard' : nav === 'About Us' ? 'about' : 'leads' as AppView);
                   }
                 }}
-                className={`hidden sm:block text-xs font-semibold tracking-wide transition-colors px-3 py-1.5 rounded-lg ${(nav === 'Home' && currentView === 'dashboard') ||
+                className={`hidden lg:block text-xs font-semibold tracking-wide transition-colors px-3 py-1.5 rounded-lg ${(nav === 'Home' && currentView === 'dashboard') ||
                   (nav === 'About Us' && currentView === 'about') ||
                   (nav === 'Our Team' && currentView === 'leads') ||
                   (nav === 'Tech Hub' && currentView === 'resources')
@@ -1058,6 +1069,63 @@ const App: React.FC = () => {
             </div>
           </div>
         </header>
+
+        {/* Side Panel Overlay */}
+        {isSideNavOpen && (
+          <div className="fixed inset-0 z-50 flex" aria-modal="true" role="dialog">
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+              onClick={() => setIsSideNavOpen(false)}
+            ></div>
+
+            {/* Side Panel */}
+            <div className={`relative flex flex-col w-64 h-full shadow-xl transition-transform transform ${isSideNavOpen ? 'translate-x-0' : '-translate-x-full'} ${darkMode ? 'bg-[#0a0a0a] border-r border-gray-800' : 'bg-white border-r border-gray-200'}`}>
+              <div className="flex items-center justify-between px-4 py-4 border-b border-gray-800/10 dark:border-gray-800">
+                <div className="flex items-center gap-2">
+                  <GDGLogo />
+                  <span className={`font-extrabold text-lg ${darkMode ? 'text-white' : 'text-gray-900'}`}>Menu</span>
+                </div>
+                <button
+                  onClick={() => setIsSideNavOpen(false)}
+                  className={`p-2 rounded-lg transition-colors ${darkMode ? 'hover:bg-white/10 text-gray-400' : 'hover:bg-gray-100 text-gray-500'}`}
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 relative z-10 w-full">
+                {[
+                  { name: 'Home', view: 'dashboard', icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+                  { name: 'About Us', view: 'about', icon: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+                  { name: 'Our Team', view: 'leads', icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
+                  { name: 'Tech Hub', view: 'resources', icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" }
+                ].map((nav) => {
+                  const isActive = currentView === nav.view || (nav.name === 'Tech Hub' && currentView === 'resources') || (nav.name === 'Our Team' && currentView === 'leads');
+                  return (
+                    <button
+                      key={nav.name}
+                      onClick={() => {
+                        setCurrentView(nav.view as AppView);
+                        setIsSideNavOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all font-medium text-sm ${isActive
+                        ? 'bg-[#4285F4]/10 text-[#4285F4]'
+                        : `${darkMode ? 'text-gray-300 hover:bg-white/5 hover:text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'}`
+                        }`}
+                    >
+                      <svg className={`w-5 h-5 ${isActive ? 'text-[#4285F4]' : darkMode ? 'text-gray-400' : 'text-gray-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={nav.icon} />
+                      </svg>
+                      {nav.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Content View Routing */}
         {currentView === 'dashboard' && Dashboard()}
