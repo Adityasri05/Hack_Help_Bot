@@ -89,6 +89,10 @@ const App: React.FC = () => {
   const [showResourcesScrollTop, setShowResourcesScrollTop] = useState(false);
   const resourcesScrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // CertificationView Scroll State
+  const [showCertScrollTop, setShowCertScrollTop] = useState(false);
+  const certScrollContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const savedUser = localStorage.getItem('gdg_assistant_user');
     if (savedUser) {
@@ -502,7 +506,7 @@ const App: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {[
                   { view: 'chat', title: 'AI Assistant', badge: 'Gemini 2.0', desc: 'Get technical advice, debug code, brainstorm architecture, and analyze videos with Gemini-powered AI.', icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z", color: '#4285F4' },
-                  { view: 'certification', title: 'Certification Zone', badge: 'External', externalUrl: 'https://gdg-certify.vercel.app/', desc: 'Earn official Google credentials and validate your skills.', icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z", color: '#34A853' }
+                  { view: 'certification', title: 'Certification Zone', badge: 'Internal', desc: 'Earn official Google credentials and validate your skills through different certification platforms.', icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z", color: '#34A853' }
                 ].map((item: any, i) => (
                   <button key={i} onClick={() => { if (item.externalUrl) { window.open(item.externalUrl, '_blank'); } else { setCurrentView(item.view as AppView); } }}
                     className={`group relative p-6 sm:p-8 rounded-xl border text-left transition-all duration-300 hover:-translate-y-1 card-glow ${darkMode ? 'bg-[#111] border-gray-800 hover:border-gray-700' : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm'}`}>
@@ -841,6 +845,69 @@ const App: React.FC = () => {
     );
   };
 
+  const CertificationView = () => {
+    const handleCertScroll = (e: React.UIEvent<HTMLDivElement>) => {
+      handleScroll(e);
+      setShowCertScrollTop(e.currentTarget.scrollTop > 300);
+    };
+
+    const scrollToTop = () => {
+      certScrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+      <div ref={certScrollContainerRef} className={`flex-1 overflow-y-auto p-4 sm:p-8 relative ${darkMode ? 'bg-[#0a0a0a]' : 'bg-[#f5f5f5]'}`} onScroll={handleCertScroll}>
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <button onClick={() => setCurrentView('dashboard')} className={`p-2.5 rounded-lg ${darkMode ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-all active:scale-90`}>
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            </button>
+            <div>
+              <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Certification <span className="text-[#34A853]">Zone</span></h2>
+              <p className="text-sm text-gray-500">Earn official Google credentials and validate your skills across domains.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {[
+              { name: "Gen AI Study Jams", category: "External", desc: "Earn official Google credentials and validate your skills on our certification platform.", color: 'bg-[#34A853]', url: 'https://gdg-certify.vercel.app/' },
+              { name: "Code Rush", category: "External", desc: "Earn official Google credentials and validate your skills on our certification platform.", color: 'bg-[#4285F4]', url: 'https://coderush-certificate.onrender.com/' },
+            ].map((tool, i) => (
+              <a href={tool.url} target="_blank" rel="noopener noreferrer" key={i} className={`block p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 group cursor-pointer overflow-hidden relative ${darkMode ? 'bg-[#151515] border-gray-800/60 hover:border-gray-600 hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-sm hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]'}`}>
+
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${tool.color.replace('bg-', 'bg-gradient-to-br from-transparent to-')}`}></div>
+
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-5">
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 ${tool.color} rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                      <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
+                    <span className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${darkMode ? 'bg-[#0a0a0a] border-gray-800 text-gray-400 group-hover:text-white group-hover:border-gray-600 transition-colors' : 'bg-gray-50 border-gray-200 text-gray-500 group-hover:text-gray-800 transition-colors'}`}>
+                      {tool.category}
+                    </span>
+                  </div>
+                  <h4 className={`font-black text-xl mb-3 flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    {tool.name}
+                    <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#34A853]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium mb-4">{tool.desc}</p>
+                  <div className={`h-1 w-12 ${tool.color} rounded-full group-hover:w-full transition-all duration-700 opacity-80`}></div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-50 hover:scale-110 active:scale-95 shadow-lg ${showCertScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'} ${darkMode ? 'bg-[#111] text-[#34A853] border border-gray-800' : 'bg-white text-[#34A853] border border-gray-200'}`}
+          title="Scroll to Top"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+        </button>
+      </div>
+    );
+  };
+
   const AboutView = () => {
     const handleAboutScroll = (e: React.UIEvent<HTMLDivElement>) => {
       handleScroll(e);
@@ -1132,6 +1199,7 @@ const App: React.FC = () => {
         {currentView === 'leads' && LeadsView()}
         {currentView === 'events' && EventsView()}
         {currentView === 'resources' && ResourcesView()}
+        {currentView === 'certification' && CertificationView()}
         {currentView === 'about' && AboutView()}
 
         {currentView === 'chat' && (
